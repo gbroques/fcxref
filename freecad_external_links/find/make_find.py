@@ -1,44 +1,23 @@
-import glob
 import re
-import zipfile
-from pathlib import Path
-from typing import Callable, Dict, List, Tuple
-from xml.etree import ElementTree
+from typing import Callable, Dict, List
 from xml.etree.ElementTree import Element
 
 from .match import Match
 from .reference import Reference
 
-__all__ = ['find']
+__all__ = ['make_find']
 
 
-def find(base_path: str, reference: Reference) -> List[Match]:
-    matches = []
-    root_by_document_path = find_root_by_document_path(base_path)
-    for document_path, root in root_by_document_path.items():
-        matches_in_document = find_references_in_root(
-            document_path, root, reference)
-        matches.extend(matches_in_document)
-    return matches
-
-
-def find_root_by_document_path(base_path: str) -> Dict[str, Element]:
-    """Returns a dictionary where keys are document filepaths,
-    and values are document xml root elements.
-    """
-    root_by_document = {}
-    pattern = Path(base_path).joinpath('**', '*.FCStd').as_posix()
-    documents = glob.glob(pattern, recursive=True)
-    for document in documents:
-        root = parse_document_xml(document)
-        root_by_document[document] = root
-    return root_by_document
-
-
-def parse_document_xml(document: str) -> Element:
-    archive = zipfile.ZipFile(document, 'r')
-    document_xml = archive.read('Document.xml')
-    return ElementTree.fromstring(document_xml)
+def make_find(find_root_by_document_path: Callable[[str], Dict[str, Element]]):
+    def find(base_path: str, reference: Reference) -> List[Match]:
+        matches = []
+        root_by_document_path = find_root_by_document_path(base_path)
+        for document_path, root in root_by_document_path.items():
+            matches_in_document = find_references_in_root(
+                document_path, root, reference)
+            matches.extend(matches_in_document)
+        return matches
+    return find
 
 
 def make_find_references_in_property(child_element_name: str,

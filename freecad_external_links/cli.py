@@ -1,7 +1,10 @@
 import argparse
 import os
 
-from .find import Match, Reference, find
+from .find import Match, Reference, make_find
+from .find_root_document_by_path import find_root_by_document_path
+
+find = make_find(find_root_by_document_path)
 
 
 def main():
