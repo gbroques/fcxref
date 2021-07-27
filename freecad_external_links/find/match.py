@@ -26,3 +26,13 @@ class Match:
             self.object_name,
             self.location,
             self.property_name)
+
+    def __eq__(self, o: object) -> bool:
+        if isinstance(o, Match):
+            return (
+                self.document == o.document and
+                self.object_name == o.object_name and
+                self.property_name == o.property_name and
+                self.location == o.location
+            )
+        return False
