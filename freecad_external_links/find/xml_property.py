@@ -2,7 +2,7 @@ import re
 from typing import Callable, List
 from xml.etree.ElementTree import Element
 
-from .reference import Reference
+from .property import Property
 
 __all__ = ['XMLProperty']
 
@@ -22,22 +22,22 @@ class XMLProperty:
         self.reference_attribute = reference_attribute
         self.location_attribute = location_attribute
 
-    def find_locations(self, reference: Reference) -> List[str]:
-        find_references = self._make_find_references(reference)
+    def find_locations(self, property: Property) -> List[str]:
+        find_references = self._make_find_references(property)
         nested_element = self.property_element.find(self.nested_element_name)
         return find_references(nested_element)
 
-    def _make_find_references(self, reference: Reference) -> Callable[[Element], List[str]]:
-        return make_find_references_in_property(self.child_element_name,
-                                                self.reference_attribute,
-                                                self.location_attribute,
-                                                reference)
+    def _make_find_references(self, property: Property) -> Callable[[Element], List[str]]:
+        return make_find_references_in_property_element(self.child_element_name,
+                                                        self.reference_attribute,
+                                                        self.location_attribute,
+                                                        property)
 
 
-def make_find_references_in_property(child_element_name: str,
-                                     reference_attribute: str,
-                                     location_attribute: str,
-                                     reference: Reference) -> Callable[[Element], List[str]]:
+def make_find_references_in_property_element(child_element_name: str,
+                                             reference_attribute: str,
+                                             location_attribute: str,
+                                             property: Property) -> Callable[[Element], List[str]]:
     """
     XML Examples::
 
@@ -52,13 +52,13 @@ def make_find_references_in_property(child_element_name: str,
     | Expression         | expression          | path               |
     +--------------------+---------------------+--------------------+
     """
-    def find_references_in_property(property: Element) -> List[str]:
+    def find_references_in_property_element(property_element: Element) -> List[str]:
         locations = []
-        for child_element in property.findall(child_element_name):
+        for child_element in property_element.findall(child_element_name):
             content = child_element.attrib[reference_attribute]
-            pattern = re.compile(str(reference))
+            pattern = re.compile(str(property))
             match = pattern.search(content)
             if match:
                 locations.append(child_element.attrib[location_attribute])
         return locations
-    return find_references_in_property
+    return find_references_in_property_element

@@ -1,5 +1,5 @@
 from .make_find import make_find
 from .match import Match
-from .reference import Reference
+from .property import Property
 
-__all__ = ['make_find', 'Match', 'Reference']
+__all__ = ['make_find', 'Match', 'Property']

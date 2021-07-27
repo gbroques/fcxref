@@ -3,15 +3,15 @@ from typing import Callable, Dict, List
 from xml.etree.ElementTree import Element
 
 from .match import Match
-from .reference import Reference
+from .property import Property
 from .xml_property import XMLProperty
 
 __all__ = ['make_find']
 
 
 @unique
-class Property(Enum):
-    """Represents XML properties with potential cross-document references.
+class XMLPropertyName(Enum):
+    """Enumerates XML property names with potential cross-document references.
 
     XML Examples::
 
@@ -33,12 +33,12 @@ class Property(Enum):
 
 
 def make_find(find_root_by_document_path: Callable[[str], Dict[str, Element]]):
-    def find(base_path: str, reference: Reference) -> List[Match]:
+    def find(base_path: str, property: Property) -> List[Match]:
         matches = []
         root_by_document_path = find_root_by_document_path(base_path)
         for document_path, root in root_by_document_path.items():
             matches_in_document = find_references_in_root(
-                document_path, root, reference)
+                document_path, root, property)
             matches.extend(matches_in_document)
         return matches
     return find
@@ -46,35 +46,35 @@ def make_find(find_root_by_document_path: Callable[[str], Dict[str, Element]]):
 
 def find_references_in_root(document_path: str,
                             root: Element,
-                            reference: Reference) -> List[Match]:
+                            property: Property) -> List[Match]:
     matches = []
     object_data = root.find('ObjectData')
     for object in object_data:
-        properties = object.find('Properties')
+        property_elements = object.find('Properties')
         object_name = object.attrib['name']
 
-        for property in properties.findall('Property'):
-            property_name = property.attrib['name']
-            find_locations = make_find_locations(property)
-            locations = find_locations(reference)
+        for property_element in property_elements.findall('Property'):
+            property_name = property_element.attrib['name']
+            find_locations = make_find_locations(property_element)
+            locations = find_locations(property)
             for location in locations:
                 matches.append(
                     Match(document_path, object_name, property_name, location))
     return matches
 
 
-def make_find_locations(property_element: Element) -> Callable[[Reference], List[str]]:
-    def find_locations(reference: Reference) -> List[str]:
+def make_find_locations(property_element: Element) -> Callable[[Property], List[str]]:
+    def find_locations(property: Property) -> List[str]:
         property_name = property_element.attrib['name']
         if does_property_have_potential_references(property_name):
-            property = create_property(property_element)
-            return property.find_locations(reference)
+            xml_property = create_xml_property(property_element)
+            return xml_property.find_locations(property)
         else:
             return []
     return find_locations
 
 
-def create_property(property_element: Element) -> XMLProperty:
+def create_xml_property(property_element: Element) -> XMLProperty:
     """
     XML Examples::
 
@@ -103,13 +103,13 @@ def create_property(property_element: Element) -> XMLProperty:
     * `Expression Engine <https://github.com/FreeCAD/FreeCAD/blob/0.19.2/src/App/PropertyExpressionEngine.cpp#L163-L185>`_
     """
     property_name = property_element.attrib['name']
-    if property_name == Property.cells.value:
+    if property_name == XMLPropertyName.cells.value:
         return XMLProperty(property_element,
                            nested_element_name='Cells',
                            child_element_name='Cell',
                            reference_attribute='content',
                            location_attribute='address')
-    elif property_name == Property.ExpressionEngine.value:
+    elif property_name == XMLPropertyName.ExpressionEngine.value:
         return XMLProperty(property_element,
                            nested_element_name='ExpressionEngine',
                            child_element_name='Expression',
@@ -119,4 +119,4 @@ def create_property(property_element: Element) -> XMLProperty:
 
 
 def does_property_have_potential_references(property_name: str) -> bool:
-    return any([p for p in list(Property) if property_name == p.value])
+    return any([p for p in list(XMLPropertyName) if property_name == p.value])

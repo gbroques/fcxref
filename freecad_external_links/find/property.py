@@ -1,8 +1,13 @@
-__all__ = ['Reference']
+__all__ = ['Property']
 
-# TODO: Rename to Location?
-class Reference:
-    """Represents a fully-qualified location of a property."""
+
+class Property:
+    """Represents a fully-qualified property of an object in a document.
+
+    Which you can reference in a FreeCAD expression.
+
+    See `Expressions: Cross-document linking <https://wiki.freecadweb.org/Expressions#Cross-document_linking>`_.
+    """
 
     def __init__(self,
                  document: str,

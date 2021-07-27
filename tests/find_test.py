@@ -4,7 +4,7 @@ from typing import Dict
 from xml.etree import ElementTree
 from xml.etree.ElementTree import Element
 
-from freecad_external_links.find import Match, Reference, make_find
+from freecad_external_links.find import Match, Property, make_find
 
 
 def find_root_by_document_path(base_path: str) -> Dict[str, Element]:
@@ -21,7 +21,7 @@ class FindTest(unittest.TestCase):
     def test_find(self):
         find = make_find(find_root_by_document_path)
         matches = find('base_path',
-                       Reference('Master', 'Spreadsheet', 'Value'))
+                       Property('Master', 'Spreadsheet', 'Value'))
 
         self.assertEqual(len(matches), 2)
         self.assertEqual(matches[0],
