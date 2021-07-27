@@ -18,7 +18,7 @@ def find_root_by_document_path(base_path: str) -> Dict[str, Element]:
 
 class FindTest(unittest.TestCase):
 
-    def test_find_references_in_root(self):
+    def test_find(self):
         find = make_find(find_root_by_document_path)
         matches = find('base_path',
                        Reference('Master', 'Spreadsheet', 'Value'))
