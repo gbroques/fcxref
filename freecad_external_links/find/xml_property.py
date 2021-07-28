@@ -3,6 +3,7 @@ from typing import Callable, List, Tuple
 from xml.etree.ElementTree import Element
 
 from .property import Property
+from .match import Match
 
 __all__ = ['XMLProperty']
 
@@ -25,12 +26,12 @@ class XMLProperty:
         self.reference_attribute = reference_attribute
         self.location_attribute = location_attribute
 
-    def find_location_match_tuples(self, property: Property) -> List[Tuple[str, str]]:
+    def find_matches(self, property: Property) -> List[Match]:
         find_references = self._make_find_references(property)
         nested_element = self.property_element.find(self.nested_element_name)
         return find_references(nested_element)
 
-    def _make_find_references(self, property: Property) -> Callable[[Element], List[Tuple[str, str]]]:
+    def _make_find_references(self, property: Property) -> Callable[[Element], List[Match]]:
         return make_find_references_in_property_element(self.child_element_name,
                                                         self.reference_attribute,
                                                         self.location_attribute,
@@ -40,7 +41,7 @@ class XMLProperty:
 def make_find_references_in_property_element(child_element_name: str,
                                              reference_attribute: str,
                                              location_attribute: str,
-                                             property: Property) -> Callable[[Element], List[Tuple[str, str]]]:
+                                             property: Property) -> Callable[[Element], List[Match]]:
     """
     XML Examples::
 
@@ -55,15 +56,24 @@ def make_find_references_in_property_element(child_element_name: str,
     | Expression         | expression          | path               |
     +--------------------+---------------------+--------------------+
     """
-    def find_references_in_property_element(property_element: Element) -> List[Tuple[str, str]]:
-        locations = []
+    def find_references_in_property_element(property_element: Element) -> List[Match]:
+        matches = []
         for child_element in property_element.findall(child_element_name):
             content = child_element.attrib[reference_attribute]
             pattern = re.compile(property.to_regex())
             match = pattern.search(content)
             if match:
                 matched_text = match.group(0)
-                locations.append(
-                    (child_element.attrib[location_attribute], matched_text))
-        return locations
+                location_xpath = "{}/{}[@{}='{}']".format(
+                    property_element.tag,
+                    child_element.tag,
+                    location_attribute,
+                    child_element.attrib[location_attribute]
+                )
+                matches.append(
+                    Match(reference_attribute,
+                          child_element.attrib[location_attribute],
+                          matched_text,
+                          location_xpath))
+        return matches
     return find_references_in_property_element

@@ -2,6 +2,7 @@ from enum import Enum, unique
 from typing import Callable, Dict, List, Tuple
 from xml.etree.ElementTree import Element
 
+from .match import Match
 from .property import Property
 from .reference import Reference
 from .xml_property import XMLProperty
@@ -48,30 +49,41 @@ def find_references_in_root(document_path: str,
                             root: Element,
                             property: Property) -> List[Reference]:
     references = []
+    xpath_template = "ObjectData/Object[@name='{}']/Properties/Property[@name='{}']"
+    
     object_data = root.find('ObjectData')
-    for object in object_data:
-        property_elements = object.find('Properties')
+    for object in object_data.findall('Object'):
+        properties_element = object.find('Properties')
         object_name = object.attrib['name']
 
-        for property_element in property_elements.findall('Property'):
+        for property_element in properties_element.findall('Property'):
             property_name = property_element.attrib['name']
-            find_location_match_tuples = make_find_location_match_tuples(property_element)
-            location_match_tuples = find_location_match_tuples(property)
-            for location, match in location_match_tuples:
+            property_xpath = xpath_template.format(object_name, property_name)
+            find_matches = make_find_matches(
+                property_element)
+            matches = find_matches(property)
+            for match in matches:
+                xpath = property_xpath + '/' + match.location_xpath
                 references.append(
-                    Reference(document_path, object_name, property_name, location, match))
+                    Reference(document_path,
+                              object_name,
+                              property_name,
+                              match.reference_attribute,
+                              match.location,
+                              match.matched_text,
+                              xpath))
     return references
 
 
-def make_find_location_match_tuples(property_element: Element) -> Callable[[Property], List[Tuple[str, str]]]:
-    def find_location_match_tuples(property: Property) -> List[str]:
+def make_find_matches(property_element: Element) -> Callable[[Property], List[Match]]:
+    def find_matches(property: Property) -> List[str]:
         property_element_name = property_element.attrib['name']
         if does_property_have_potential_references(property_element_name):
             xml_property = create_xml_property(property_element)
-            return xml_property.find_location_match_tuples(property)
+            return xml_property.find_matches(property)
         else:
             return []
-    return find_location_match_tuples
+    return find_matches
 
 
 def create_xml_property(property_element: Element) -> XMLProperty:

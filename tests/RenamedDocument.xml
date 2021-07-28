@@ -84,7 +84,7 @@
                             <XLink file="Master.FCStd" stamp="2021-07-25T18:40:15Z" name="Spreadsheet"/>
                         </XLinks>
                         <Cell address="A1" content="Value" />
-                        <Cell address="B1" content="=Master#Spreadsheet.Value + 1" alias="Value1" />
+                        <Cell address="B1" content="=Master#Spreadsheet.RenamedValue + 1" alias="Value1" />
                         <Cell address="D8" content="Value" />
                         <Cell address="E8" content="=&lt;&lt;Master&gt;&gt;#&lt;&lt;Spreadsheet&gt;&gt;.Value" alias="Value2" />
                     </Cells>
@@ -123,7 +123,7 @@
                             <XLink file="Master.FCStd" stamp="2021-07-25T18:40:15Z" name="Spreadsheet"/>
                         </XLinks>
                         <Expression path="Height" expression="Cube#Box.Height"/>
-                        <Expression path="Radius" expression="Master#Spreadsheet.Value"/>
+                        <Expression path="Radius" expression="Master#Spreadsheet.RenamedValue"/>
                     </ExpressionEngine>
                 </Property>
                 <Property name="Height" type="App::PropertyLength">

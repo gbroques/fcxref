@@ -24,10 +24,26 @@ class FindTest(unittest.TestCase):
                           Property('Master', 'Spreadsheet', 'Value'))
 
         self.assertEqual(len(references), 2)
+
+        xpath0 = "ObjectData/Object[@name='Spreadsheet']/Properties/Property[@name='cells']/Cells/Cell[@address='B1']"
         self.assertEqual(references[0],
-                         Reference('Test.FCStd', 'Spreadsheet', 'cells', 'B1', 'Master#Spreadsheet.Value'))
+                         Reference('Test.FCStd',
+                                   'Spreadsheet',
+                                   'cells',
+                                   'content',
+                                   'B1',
+                                   'Master#Spreadsheet.Value',
+                                   xpath0))
+
+        xpath1 = "ObjectData/Object[@name='Cylinder']/Properties/Property[@name='ExpressionEngine']/ExpressionEngine/Expression[@path='Radius']"
         self.assertEqual(references[1],
-                         Reference('Test.FCStd', 'Cylinder', 'ExpressionEngine', 'Radius', 'Master#Spreadsheet.Value'))
+                         Reference('Test.FCStd',
+                                   'Cylinder',
+                                   'ExpressionEngine',
+                                   'expression',
+                                   'Radius',
+                                   'Master#Spreadsheet.Value',
+                                   xpath1))
 
 
 if __name__ == '__main__':
