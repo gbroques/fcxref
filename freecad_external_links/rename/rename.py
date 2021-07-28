@@ -1,8 +1,11 @@
-from typing import Dict, Tuple
+from typing import Dict
 from xml.etree.ElementTree import Element
 
-def rename_references(from_reference: Tuple[str, str, str],
-                      to_reference: Tuple[str, str, str]) -> Dict[str, Element]:
+from ..find import Property
+
+
+def rename(from_property: Property,
+           to_property: Property) -> Dict[str, Element]:
     """
     TODO: 1) Find from document
              If not label (not surrounded by << >>),
