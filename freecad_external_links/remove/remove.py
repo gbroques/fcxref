@@ -2,7 +2,7 @@ from typing import Dict
 from xml.etree.ElementTree import Element
 
 
-def remvoe(document: str) -> Dict[str, Element]:
+def remove(document: str) -> Dict[str, Element]:
     """
     https://github.com/FreeCAD/FreeCAD/blob/0.19.2/src/App/PropertyLinks.cpp#L4473-L4510
     https://github.com/FreeCAD/FreeCAD/blob/0.19.2/src/App/PropertyLinks.cpp#L3155-L3249
