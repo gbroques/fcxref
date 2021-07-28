@@ -25,9 +25,9 @@ class FindTest(unittest.TestCase):
 
         self.assertEqual(len(references), 2)
         self.assertEqual(references[0],
-                         Reference('Test.FCStd', 'Spreadsheet', 'cells', 'B1'))
+                         Reference('Test.FCStd', 'Spreadsheet', 'cells', 'B1', 'Master#Spreadsheet.Value'))
         self.assertEqual(references[1],
-                         Reference('Test.FCStd', 'Cylinder', 'ExpressionEngine', 'Radius'))
+                         Reference('Test.FCStd', 'Cylinder', 'ExpressionEngine', 'Radius', 'Master#Spreadsheet.Value'))
 
 
 if __name__ == '__main__':

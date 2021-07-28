@@ -17,6 +17,12 @@ class Property:
         self.object_name = object_name
         self.property_name = property_name
 
+    def to_regex(self):
+        return '{}#{}\.{}'.format(
+            self.document,
+            self.object_name,
+            self.property_name)
+
     def __str__(self):
         return self._to_string()
 
@@ -24,4 +30,7 @@ class Property:
         return self._to_string()
 
     def _to_string(self):
-        return '{}#{}.{}'.format(self.document, self.object_name, self.property_name)
+        return '{}#{}.{}'.format(
+            self.document,
+            self.object_name,
+            self.property_name)

@@ -8,11 +8,13 @@ class Reference:
                  document: str,
                  object_name: str,
                  property_name: str,
-                 location: str) -> None:
+                 location: str,
+                 match: str) -> None:
         self.document = document
         self.object_name = object_name
         self.property_name = property_name
         self.location = location
+        self.match = match
 
     def __str__(self):
         return self._to_string()
@@ -33,6 +35,7 @@ class Reference:
                 self.document == o.document and
                 self.object_name == o.object_name and
                 self.property_name == o.property_name and
-                self.location == o.location
+                self.location == o.location and
+                self.match == o.match
             )
         return False
