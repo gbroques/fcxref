@@ -8,7 +8,10 @@ __all__ = ['XMLProperty']
 
 
 class XMLProperty:
-    """Represents a property in the XML with a potential cross-document reference."""
+    """Represents a property in the XML with a potential cross-document reference.
+
+    Encapsulates the logic for finding a reference to a property.
+    """
 
     def __init__(self,
                  property_element: Element,

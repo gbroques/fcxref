@@ -2,8 +2,8 @@ from enum import Enum, unique
 from typing import Callable, Dict, List
 from xml.etree.ElementTree import Element
 
-from .match import Match
 from .property import Property
+from .reference import Reference
 from .xml_property import XMLProperty
 
 __all__ = ['make_find']
@@ -33,21 +33,21 @@ class XMLPropertyName(Enum):
 
 
 def make_find(find_root_by_document_path: Callable[[str], Dict[str, Element]]):
-    def find(base_path: str, property: Property) -> List[Match]:
-        matches = []
+    def find(base_path: str, property: Property) -> List[Reference]:
+        references = []
         root_by_document_path = find_root_by_document_path(base_path)
         for document_path, root in root_by_document_path.items():
-            matches_in_document = find_references_in_root(
+            references_in_document = find_references_in_root(
                 document_path, root, property)
-            matches.extend(matches_in_document)
-        return matches
+            references.extend(references_in_document)
+        return references
     return find
 
 
 def find_references_in_root(document_path: str,
                             root: Element,
-                            property: Property) -> List[Match]:
-    matches = []
+                            property: Property) -> List[Reference]:
+    references = []
     object_data = root.find('ObjectData')
     for object in object_data:
         property_elements = object.find('Properties')
@@ -58,15 +58,15 @@ def find_references_in_root(document_path: str,
             find_locations = make_find_locations(property_element)
             locations = find_locations(property)
             for location in locations:
-                matches.append(
-                    Match(document_path, object_name, property_name, location))
-    return matches
+                references.append(
+                    Reference(document_path, object_name, property_name, location))
+    return references
 
 
 def make_find_locations(property_element: Element) -> Callable[[Property], List[str]]:
     def find_locations(property: Property) -> List[str]:
-        property_name = property_element.attrib['name']
-        if does_property_have_potential_references(property_name):
+        property_element_name = property_element.attrib['name']
+        if does_property_have_potential_references(property_element_name):
             xml_property = create_xml_property(property_element)
             return xml_property.find_locations(property)
         else:
@@ -102,14 +102,14 @@ def create_xml_property(property_element: Element) -> XMLProperty:
     * `Cells <https://github.com/FreeCAD/FreeCAD/blob/0.19.2/src/Mod/Spreadsheet/App/PropertySheet.cpp#L277-L304>`_
     * `Expression Engine <https://github.com/FreeCAD/FreeCAD/blob/0.19.2/src/App/PropertyExpressionEngine.cpp#L163-L185>`_
     """
-    property_name = property_element.attrib['name']
-    if property_name == XMLPropertyName.cells.value:
+    property_element_name = property_element.attrib['name']
+    if property_element_name == XMLPropertyName.cells.value:
         return XMLProperty(property_element,
                            nested_element_name='Cells',
                            child_element_name='Cell',
                            reference_attribute='content',
                            location_attribute='address')
-    elif property_name == XMLPropertyName.ExpressionEngine.value:
+    elif property_element_name == XMLPropertyName.ExpressionEngine.value:
         return XMLProperty(property_element,
                            nested_element_name='ExpressionEngine',
                            child_element_name='Expression',
@@ -118,5 +118,5 @@ def create_xml_property(property_element: Element) -> XMLProperty:
     return None
 
 
-def does_property_have_potential_references(property_name: str) -> bool:
-    return any([p for p in list(XMLPropertyName) if property_name == p.value])
+def does_property_have_potential_references(property_element_name: str) -> bool:
+    return any([p for p in list(XMLPropertyName) if property_element_name == p.value])

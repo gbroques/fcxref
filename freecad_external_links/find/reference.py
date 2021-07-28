@@ -1,8 +1,8 @@
-__all__ = ['Match']
+__all__ = ['Reference']
 
-# TODO: Rename to Reference?
-class Match:
-    """Represents a reference to an external property."""
+
+class Reference:
+    """Represents a reference to a property in another document."""
 
     def __init__(self,
                  document: str,
@@ -28,7 +28,7 @@ class Match:
             self.property_name)
 
     def __eq__(self, o: object) -> bool:
-        if isinstance(o, Match):
+        if isinstance(o, Reference):
             return (
                 self.document == o.document and
                 self.object_name == o.object_name and
