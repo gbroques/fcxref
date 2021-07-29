@@ -32,6 +32,20 @@ Approach
 --------
 ``fcxref`` relies on parsing the ``Document.xml`` in compressed ``.FCStd`` files.
 
+Usage
+-----
+There are two ways to use ``fcxref``:
+
+1. via the Python API
+2. vai the Command Line
+
+The following 2 sections cover these 2 usage methods with the below example.
+
+Consider you have ``Example.FCStd`` that contains two references to ``Master#Spreadsheet.Value``:
+
+1. in B1 of the ``Spreadsheet``
+2. and in the expression of ``Cylinder.Radius``.
+
 Python API
 ----------
 
@@ -52,11 +66,6 @@ Simple Queries
 .. code-block::
 
    [Example.FCStd Spreadsheet.B1 (cells), Example.FCStd Cylinder.Radius (ExpressionEngine)]
-
-The above example represents ``Example.FCStd`` contains two references to ``Master#Spreadsheet.Value``:
-
-1. In B1 of the ``Spreadsheet``.
-2. In the expression of ``Cylinder.Radius``.
 
 Regular Expressions
 """""""""""""""""""
