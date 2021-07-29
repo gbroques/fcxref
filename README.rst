@@ -17,7 +17,7 @@ On `Expressions: Known issues / remaining tasks <https://wiki.freecadweb.org/Exp
 
     There is no expression manager implemented where all expressions in a document are listed, and can be created, deleted, queried, etc.
 
-Large complex projects in FreeCAD will typically rely on extensive use of cross-document referencing to objects such as aliases in spreadsheets.
+Large complex FreeCAD projects typically rely on extensive use of cross-document referencing to objects such as aliases in spreadsheets.
 
 When you have dozens of references to the same property, it becomes very difficult to find all the places where references exist to the property or rename the property.
 
@@ -61,7 +61,7 @@ The above example represents ``Example.FCStd`` contains two references to ``Mast
 Regular Expressions
 """""""""""""""""""
 
-You can pass in regular expressions for the document, object, or property name for more powerful expressions.
+You can pass in regular expressions for document, object, or property names for more powerful expressions.
 
 For example, query all external references to the ``Spreadsheet`` object in ``Master``:
 
@@ -137,6 +137,8 @@ Regular expressions for more powerful queries are also supported:
    Example.FCStd Spreadsheet.B1 (cells) -> Master#Spreadsheet.Value
    Example.FCStd Cylinder.Radius (ExpressionEngine) -> Master#Spreadsheet.Value
    AnotherExample.FCStd Spreadsheet.A1 (cells) -> Master#Spreadsheet.AnotherValue
+
+💡 **TIP:** When using special characters on the command line such as ``.``, or ``<`` and ``>`` for label names, surround the argument in double-quotes.
 
 Supported FreeCAD Versions
 --------------------------
