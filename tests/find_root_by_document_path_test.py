@@ -8,7 +8,7 @@ from fcxref.root_by_document_path import find_root_by_document_path
 
 class FindRootByDocumentPath(unittest.TestCase):
 
-    @patch('freecad_external_links.root_by_document_path.glob')
+    @patch('fcxref.root_by_document_path.glob')
     def test_find_root_by_document_path(self, glob):
         tests_path = Path(__file__).parent
         glob.return_value = [str(tests_path.joinpath('Test.FCStd'))]

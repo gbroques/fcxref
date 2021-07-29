@@ -20,7 +20,7 @@ def main():
                                        required=True)
 
     find_parser = subparsers.add_parser('find',
-                                        help='Find cross-document refrences to a property',
+                                        help='Find cross-document references to a property',
                                         usage='fcxlink find <document> <object> <property>')
 
     find_parser.add_argument(
@@ -29,7 +29,7 @@ def main():
     find_parser.add_argument('property', help='Property.')
 
     rename_parser = subparsers.add_parser('rename',
-                                          help='Rename cross-document refrences to a property',
+                                          help='Rename cross-document references to a property',
                                           usage='fcxlink rename <from_document> <from_object> <from_property> <to_document> <to_object> <to_property>')
 
     rename_parser.add_argument(
