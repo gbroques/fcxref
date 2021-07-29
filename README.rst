@@ -10,18 +10,10 @@ The following operations are supported:
 2. *Renaming* external references
 3. *Removing* external references
 
-Installing
-----------
-From the root of this repository:
+Approach
+--------
+``fcxref`` relies on parsing the ``Document.xml`` in compressed ``.FCStd`` files.
 
-.. code-block::
-
-   pip install --editable .
-
-How to Run Unit Tests
----------------------
-From the root of this repository:
-
-.. code-block::
-
-   python -m unittest discover -s tests -p "*_test.py"            
+Contributing
+------------
+See `Contributing Guidelines <./CONTRIBUTING.rst>`_.
