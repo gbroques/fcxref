@@ -17,9 +17,9 @@ On `Expressions: Known issues / remaining tasks <https://wiki.freecadweb.org/Exp
 
     There is no expression manager implemented where all expressions in a document are listed, and can be created, deleted, queried, etc.
 
-Large complex FreeCAD projects typically rely on extensive use of cross-document referencing to objects such as aliases in spreadsheets.
+Large complex FreeCAD projects typically rely on extensive use of cross-document referencing to properties such as aliases in spreadsheets.
 
-When you have dozens of references to the same property, it becomes very difficult to find all the places where references exist to the property or rename the property.
+When you have dozens of references to the same property, it becomes very difficult to find all the places where references exist or rename the property.
 
 ``fcxref`` aims to fill this gap until similiar functionality can be added to FreeCAD core.
 
@@ -31,6 +31,17 @@ See the following related FreeCAD forum discussions for additional motivation:
 Approach
 --------
 ``fcxref`` relies on parsing the ``Document.xml`` in compressed ``.FCStd`` files.
+
+Installation
+------------
+
+Available on the `Python Package Index (PyPI) <https://pypi.org/>`_.
+
+.. code-block::
+
+   pip install fcxref
+
+⚠️ **Not yet available on PyPI.** We're waiting on cutting the first release!
 
 Usage
 -----
