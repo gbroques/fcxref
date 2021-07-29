@@ -8,7 +8,7 @@ The following operations are supported:
 
 1. *Finding* external references
 2. *Renaming* external references
-3. *Removing* external references
+3. and *Removing* external references
 
 Approach
 --------
