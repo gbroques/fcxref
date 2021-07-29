@@ -4,7 +4,7 @@ from typing import Dict
 from xml.etree import ElementTree
 from xml.etree.ElementTree import Element
 
-from freecad_external_links.find import Property, Reference, make_find
+from freecad_external_links.find import Property
 from freecad_external_links.rename import make_rename
 
 

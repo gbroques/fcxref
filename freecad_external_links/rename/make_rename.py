@@ -38,8 +38,8 @@ def rename_references_in_document_xml(root_by_document_path: Dict[str, Element],
                                       references_by_document_path: Dict[str, List[Reference]],
                                       to_property: Property) -> Dict[str, Element]:
     renamed_root_by_document_path = {}
-    for document_path, root in root_by_document_path.items():
-        references = references_by_document_path[document_path]
+    for document_path, references in references_by_document_path.items():
+        root = root_by_document_path[document_path]
         copy = deepcopy(root)
         renamed_root_by_document_path[document_path] = copy
         for reference in references:
