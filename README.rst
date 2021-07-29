@@ -1,12 +1,14 @@
-FreeCAD External Links
-======================
-Python module for external links, or cross-document references in FreeCAD.
+fcxref
+======
+Manages **F**\ ree\ **C**\ AD e\ **x**\ ternal **ref**\ erences.
+
+"External references" are also known as external links or cross-document references.
 
 The following operations are supported:
 
-1. *Finding* cross-document references
-2. *Renaming* documents, objects, and properties with cross-document references
-3. *Removing* cross-document references
+1. *Finding* external references
+2. *Renaming* external references
+3. *Removing* external references
 
 Installing
 ----------

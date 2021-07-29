@@ -4,7 +4,7 @@ from os import path
 from setuptools import setup
 
 version = {}
-with open('freecad_external_links/_version.py') as fp:
+with open('fcxref/_version.py') as fp:
     exec(fp.read(), version)
 
 current_dir = path.abspath(path.dirname(__file__))
@@ -12,17 +12,17 @@ with io.open(path.join(current_dir, 'README.rst'), encoding='utf-8') as f:
     long_description = f.read()
 
 setup(
-    name='freecad-external-links',
-    description='Utility for cross-document links or references in FreeCAD.',
+    name='fcxref',
+    description='Manages FreeCAD external references.',
     long_description=long_description,
     long_description_content_type='text/x-rst',
-    url='https://github.com/gbroques/freecad-external-links',
+    url='https://github.com/gbroques/fcxref',
     author='G Roques',
     version=version['__version__'],
-    packages=['freecad_external_links'],
+    packages=['fcxref'],
     entry_points={
         'console_scripts': [
-            'fcxlink=freecad_external_links.cli:main'
+            'fcxref=fcxref.cli:main'
         ]
     },
     install_requires=[],

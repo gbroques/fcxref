@@ -3,8 +3,7 @@ from pathlib import Path
 from unittest.mock import patch
 from xml.etree.ElementTree import Element
 
-from freecad_external_links.root_by_document_path import \
-    find_root_by_document_path
+from fcxref.root_by_document_path import find_root_by_document_path
 
 
 class FindRootByDocumentPath(unittest.TestCase):

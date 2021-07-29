@@ -4,7 +4,7 @@ from typing import Dict
 from xml.etree import ElementTree
 from xml.etree.ElementTree import Element
 
-from freecad_external_links.find import Property, Reference, make_find
+from fcxref.find import Property, Reference, make_find
 
 
 def find_root_by_document_path(base_path: str) -> Dict[str, Element]:
