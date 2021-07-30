@@ -6,7 +6,7 @@ from xml.etree.ElementTree import Element
 from fcxref.root_by_document_path import find_root_by_document_path
 
 
-class FindRootByDocumentPath(unittest.TestCase):
+class FindRootByDocumentPathTest(unittest.TestCase):
 
     @patch('fcxref.root_by_document_path.glob')
     def test_find_root_by_document_path(self, glob):
@@ -28,6 +28,29 @@ class FindRootByDocumentPath(unittest.TestCase):
 
         glob.assert_called_once()
         glob_pattern = str(tests_path.joinpath('**', '*.FCStd'))
+        glob.assert_called_with(glob_pattern, recursive=True)
+
+    @patch('fcxref.root_by_document_path.glob')
+    def test_find_root_by_document_path_with_document_pattern(self, glob):
+        tests_path = Path(__file__).parent
+        glob.return_value = [str(tests_path.joinpath('Test.FCStd'))]
+
+        root_by_document_path = find_root_by_document_path(
+            str(tests_path), 'Test')
+
+        self.assertEqual(len(root_by_document_path.items()), 1)
+
+        document_path = str(tests_path.joinpath('Test.FCStd'))
+        self.assertIn(document_path, root_by_document_path)
+
+        root = root_by_document_path[document_path]
+        self.assertIsInstance(root, Element)
+        self.assertEqual(root.tag, 'Document')
+        self.assertEqual(root.attrib['SchemaVersion'], '4')
+        self.assertEqual(root.find('Properties').attrib['Count'], '15')
+
+        glob.assert_called_once()
+        glob_pattern = str(tests_path.joinpath('**', 'Test.FCStd'))
         glob.assert_called_with(glob_pattern, recursive=True)
 
 

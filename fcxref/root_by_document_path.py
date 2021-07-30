@@ -1,21 +1,26 @@
+import time
 from glob import glob
 from pathlib import Path
 from typing import Dict, List
 from xml.etree import ElementTree
 from xml.etree.ElementTree import Element
-from zipfile import ZipFile, ZIP_DEFLATED, ZipInfo
-import time
+from zipfile import ZIP_DEFLATED, ZipFile, ZipInfo
 
 __all__ = ['find_root_by_document_path', 'write_root_by_document_path']
 
 
-def find_root_by_document_path(base_path: str) -> Dict[str, Element]:
+def find_root_by_document_path(base_path: str, document_pattern: str = '*') -> Dict[str, Element]:
     """Returns a dictionary where keys are document filepaths,
     and values are document xml root elements.
     """
-    pattern = Path(base_path).joinpath('**', '*.FCStd').as_posix()
-    document_paths = glob(pattern, recursive=True)
+    document_paths = find_document_paths(base_path, document_pattern)
     return _parse_document_xmls(document_paths)
+
+
+def find_document_paths(base_path: str, document_pattern: str) -> List[str]:
+    document_filename = '{}.FCStd'.format(document_pattern)
+    pattern = Path(base_path).joinpath('**', document_filename).as_posix()
+    return glob(pattern, recursive=True)
 
 
 def write_root_by_document_path(root_by_document_path: Dict[str, Element]) -> None:
