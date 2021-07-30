@@ -12,11 +12,6 @@ def make_rename(find_root_by_document_path: Callable[[str], Dict[str, Element]])
     def rename(base_path: str,
                from_property: Property,
                to_property: Property) -> Dict[str, Element]:
-        """
-        TODO: Person is responsible for manually renaming the property being referenced to,
-            in the owner document.
-            This script only changes all the cross-document referencens.
-        """
         root_by_document_path = find_root_by_document_path(base_path)
         references = find(base_path, from_property)
         references_by_document_path = group_by_document_path(references)
