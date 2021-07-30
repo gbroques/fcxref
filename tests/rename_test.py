@@ -8,7 +8,7 @@ from fcxref.find import Property
 from fcxref.rename import make_rename
 
 
-def find_root_by_document_path(base_path: str) -> Dict[str, Element]:
+def find_root_by_document_path(base_path: str, document_pattern: str = '*') -> Dict[str, Element]:
     return {
         'Test.FCStd': load_root('Document.xml')
     }
@@ -25,15 +25,12 @@ class RenameTest(unittest.TestCase):
 
     def test_rename(self):
         rename = make_rename(find_root_by_document_path)
-        from_property = Property('Master', 'Spreadsheet', 'Value')
-        to_property = Property('Master', 'Spreadsheet', 'RenamedValue')
         root_by_document_path = rename('base_path',
-                                       from_property,
-                                       to_property)
-
+                                       'Master',
+                                       'Spreadsheet',
+                                       ('Value', 'RenamedValue'))
         self.assertIn('Test.FCStd', root_by_document_path)
         root = root_by_document_path['Test.FCStd']
-        ElementTree.tostring(root)
         expected_root = load_root('RenamedDocument.xml')
         self.assertEqual(ElementTree.tostring(root),
                          ElementTree.tostring(expected_root))

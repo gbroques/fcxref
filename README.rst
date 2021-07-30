@@ -8,7 +8,7 @@ The following operations are supported:
 
 1. *Finding* external references
 2. *Renaming* external references
-3. and *Removing* external references
+3. and *Removing* external references (**not yet implemented**)
 
 Motivation
 ----------
@@ -92,6 +92,32 @@ For example, query all external references to the ``Spreadsheet`` object in ``Ma
    base_path = './base/path/to/freecad/documents'
    references = find(base_path, Property('Master', 'Spreadsheet', '.*'))
 
+rename
+^^^^^^
+
+The ``rename`` function takes:
+
+1. the base path to look for FreeCAD documents in
+2. the name or label of the document
+3. the name or label of the object
+4. and a 2-element tuple containing the property before and after renaming. 
+
+It returns a dictionary where keys are filepaths to updated ``.FCStd`` files,
+and values are XML `Element`_ objects representing updated ``Document.xml`` files.
+
+.. _Element: https://docs.python.org/3/library/xml.etree.elementtree.html#xml.etree.ElementTree.Element
+
+.. code-block:: python
+
+   from fcxref import rename
+   
+   base_path = './base/path/to/freecad/documents'
+   root_by_document_path = find(base_path, 'Master', 'Spreadsheet', ('Value', 'RenamedValue'))
+   print(root_by_document_path)
+
+.. code-block::
+
+   {'Example.FCStd': <Element 'Document' at 0x7efcd281cc20>, 'Master.FCStd': <Element 'Document' at 0x7f4d13c39270>}
 
 Command Line
 ------------
@@ -127,6 +153,8 @@ find
    $ fcxref find --help ↵                
    usage: fcxlink find <document> <object> <property>
    
+   Surround arguments containing special characters in quotes (e.g. "<<My Label>>").
+   
    positional arguments:
      document    Document name or label.
      object      Object name or label.
@@ -159,6 +187,43 @@ Regular expressions for more powerful queries are also supported:
    AnotherExample.FCStd Spreadsheet.A1 (cells) -> Master#Spreadsheet.AnotherValue
 
 💡 **TIP:** When using special characters on the command line such as ``.``, or ``<`` and ``>`` for label names, surround the argument in double-quotes.
+
+rename
+^^^^^^
+
+.. code-block::
+
+   $ fcxref rename --help ↵
+   usage: fcxlink rename <document> <object> <from_property> <to_property>
+   
+   Surround arguments containing special characters in quotes (e.g. "<<My Label>>").
+   
+   positional arguments:
+     document       Document name or label of reference to rename.
+     object         Object name or label of reference to rename.
+     from_property  Property of reference before renaming.
+     to_property    Property of reference after renaming.
+   
+   optional arguments:
+     -h, --help     show this help message and exit
+
+
+Simple Renames
+""""""""""""""
+
+The ``rename`` command will prompt users for confirmation before modifying any files,
+and defaults to "No" if an explicit "Yes" is not provided.
+
+.. code-block::
+
+   $ fcxref rename Master Spreadsheet Value RenamedValue ↵
+   The following 2 document(s) reference Master#Spreadsheet.Value:
+     Example.FCStd
+     Master.FCStd
+   
+   Do you wish to rename the references to Master#Spreadsheet.RenamedValue? [y/N] 
+   y ↵
+   2 documents updated.
 
 Supported FreeCAD Versions
 --------------------------

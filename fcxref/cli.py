@@ -21,6 +21,7 @@ def main():
 
     find_parser = subparsers.add_parser('find',
                                         help='Find cross-document references to a property',
+                                        description='Surround arguments containing special characters in quotes (e.g. "<<My Label>>").',
                                         usage='fcxlink find <document> <object> <property>')
 
     find_parser.add_argument(
@@ -30,20 +31,17 @@ def main():
 
     rename_parser = subparsers.add_parser('rename',
                                           help='Rename cross-document references to a property',
-                                          usage='fcxlink rename <from_document> <from_object> <from_property> <to_document> <to_object> <to_property>')
+                                          description='Surround arguments containing special characters in quotes (e.g. "<<My Label>>").',
+                                          usage='fcxlink rename <document> <object> <from_property> <to_property>')
 
     rename_parser.add_argument(
-        'from_document', help='Document name or label of reference to rename.')
+        'document', help='Document name or label of reference to rename.')
     rename_parser.add_argument(
-        'from_object', help='Object name or label of reference to rename.')
+        'object', help='Object name or label of reference to rename.')
     rename_parser.add_argument(
-        'from_property', help='Property of reference to rename.')
+        'from_property', help='Property of reference before renaming.')
     rename_parser.add_argument(
-        'to_document', help='Document name or label of reference to rename to.')
-    rename_parser.add_argument(
-        'to_object', help='Object name or label of reference to rename to.')
-    rename_parser.add_argument(
-        'to_property', help='Property of reference to rename to.')
+        'to_property', help='Property of reference after renaming.')
 
     cwd = os.getcwd()
     args = parser.parse_args()
@@ -69,25 +67,27 @@ def main():
         else:
             print('No references to {} found.'.format(property))
     elif command == 'rename':
+        renamed_root_by_document_path = rename(cwd,
+                                               args['document'],
+                                               args['object'],
+                                               (args['from_property'], args['to_property']))
         from_property = Property(
-            args['from_document'], args['from_object'], args['from_property'])
-        to_property = Property(args['to_document'],
-                               args['to_object'], args['to_property'])
-        renamed_root_by_document_path = rename(cwd, from_property, to_property)
+            args['document'], args['object'], args['from_property'])
+        to_property = Property(
+            args['document'], args['object'], args['to_property'])
         document_paths = renamed_root_by_document_path.keys()
         num_documents = len(document_paths)
         if num_documents == 0:
             print('No documents contain references to {}.'.format(from_property))
         else:
-            word = 'document' if num_documents == 1 else 'documents'
-            print('The following {} {} references {}:'.format(
-                num_documents, word, from_property))
+            print('The following {} document(s) reference {}:'.format(
+                num_documents, from_property))
 
             def format_document_path(document_path: str) -> str:
                 beginning_path = cwd + os.path.sep
                 return document_path.replace(beginning_path, '')
             print('  ' + '\n  '.join(map(format_document_path, document_paths)) + '\n')
-            question = 'Do you wish to rename the references to {}?'.format(
+            question = 'Do you wish to rename references to {}?'.format(
                 to_property)
             answer = query_yes_no(question, 'no')
             if answer:
