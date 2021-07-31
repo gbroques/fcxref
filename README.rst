@@ -56,7 +56,7 @@ Approach
 Installation
 ------------
 
-Available on the `Python Package Index (PyPI) <https://pypi.org/>`_.
+Available on the `Python Package Index (PyPI) <https://pypi.org/project/fcxref/>`_.
 
 .. code-block::
 
