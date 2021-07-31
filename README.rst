@@ -1,8 +1,23 @@
 fcxref
 ======
-Manages **F**\ ree\ **C**\ AD e\ **x**\ ternal **ref**\ erences.
+
+* `Introduction`_
+* `Motivation`_
+* `Approach`_
+* `Installation`_
+* `Usage`_
+* `Python API`_
+* `Command Line`_
+* `Supported FreeCAD Versions`_
+* `Changelog`_
+* `Contributing`_
+
+Introduction
+------------
 
 "External references" are also known as external links or cross-document references.
+
+Manages **F**\ ree\ **C**\ AD e\ **x**\ ternal **ref**\ erences.
 
 The following operations are supported:
 
@@ -228,6 +243,10 @@ Supported FreeCAD Versions
 Currently only FreeCAD 19 and greater is supported.
 
 If changes are minimal, then supporting older versions may be considered.
+
+Changelog
+---------
+See `Changelog <./CHANGELOG.rst>`__.
 
 Contributing
 ------------
