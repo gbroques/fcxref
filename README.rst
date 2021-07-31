@@ -41,8 +41,6 @@ Available on the `Python Package Index (PyPI) <https://pypi.org/>`_.
 
    pip install fcxref
 
-⚠️ **Not yet available on PyPI.** We're waiting on cutting the first release!
-
 Usage
 -----
 There are two ways to use ``fcxref``:
