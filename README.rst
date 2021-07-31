@@ -5,6 +5,8 @@ fcxref
    :alt: PyPI version
    :target: https://badge.fury.io/py/fcxref
 
+----
+
 * `Introduction`_
 * `Motivation`_
 * `Approach`_
