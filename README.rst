@@ -21,9 +21,9 @@ fcxref
 Introduction
 ------------
 
-"External references" are also known as external links or cross-document references.
-
 Manages **F**\ ree\ **C**\ AD e\ **x**\ ternal **ref**\ erences.
+
+"External references" are also known as external links or cross-document references.
 
 The following operations are supported:
 
