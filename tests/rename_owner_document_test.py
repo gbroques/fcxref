@@ -10,7 +10,7 @@ from fcxref.rename.rename_owner_document import rename_owner_document
 
 def find_root_by_document_path(base_path: str, document_pattern: str) -> Dict[str, Element]:
     return {
-        'Master.FCStd': load_root('MasterDocument.xml')
+        'MainDocument.FCStd': load_root('MainDocument.xml')
     }
 
 
@@ -24,50 +24,50 @@ def load_root(document_xml_path: str) -> Element:
 class RenameOwnerDocumentTest(unittest.TestCase):
 
     def test_rename_owner_document_with_document_name_and_object_name(self):
-        from_property = Property('Master', 'Spreadsheet', 'Value')
+        from_property = Property('MainDocument', 'Spreadsheet', 'Value')
         to_property_name = 'RenamedValue'
         root_by_document_path = rename_owner_document(
             find_root_by_document_path, '.', from_property, to_property_name)
 
-        self.assertIn('Master.FCStd', root_by_document_path)
-        root = root_by_document_path['Master.FCStd']
-        expected_root = load_root('RenamedMasterDocument.xml')
+        self.assertIn('MainDocument.FCStd', root_by_document_path)
+        root = root_by_document_path['MainDocument.FCStd']
+        expected_root = load_root('RenamedMainDocument.xml')
         self.assertEqual(ElementTree.tostring(root),
                          ElementTree.tostring(expected_root))
 
     def test_rename_owner_document_with_document_label_and_object_label(self):
-        from_property = Property('<<Master>>', '<<Spreadsheet>>', 'Value')
+        from_property = Property('<<MainDocument>>', '<<Spreadsheet>>', 'Value')
         to_property_name = 'RenamedValue'
         root_by_document_path = rename_owner_document(
             find_root_by_document_path, '.', from_property, to_property_name)
 
-        self.assertIn('Master.FCStd', root_by_document_path)
-        root = root_by_document_path['Master.FCStd']
-        expected_root = load_root('RenamedMasterDocument.xml')
+        self.assertIn('MainDocument.FCStd', root_by_document_path)
+        root = root_by_document_path['MainDocument.FCStd']
+        expected_root = load_root('RenamedMainDocument.xml')
         self.assertEqual(ElementTree.tostring(root),
                          ElementTree.tostring(expected_root))
 
     def test_rename_owner_document_with_document_name_and_object_label(self):
-        from_property = Property('Master', '<<Spreadsheet>>', 'Value')
+        from_property = Property('MainDocument', '<<Spreadsheet>>', 'Value')
         to_property_name = 'RenamedValue'
         root_by_document_path = rename_owner_document(
             find_root_by_document_path, '.', from_property, to_property_name)
 
-        self.assertIn('Master.FCStd', root_by_document_path)
-        root = root_by_document_path['Master.FCStd']
-        expected_root = load_root('RenamedMasterDocument.xml')
+        self.assertIn('MainDocument.FCStd', root_by_document_path)
+        root = root_by_document_path['MainDocument.FCStd']
+        expected_root = load_root('RenamedMainDocument.xml')
         self.assertEqual(ElementTree.tostring(root),
                          ElementTree.tostring(expected_root))
 
     def test_rename_owner_document_with_document_label_and_object_name(self):
-        from_property = Property('<<Master>>', 'Spreadsheet', 'Value')
+        from_property = Property('<<MainDocument>>', 'Spreadsheet', 'Value')
         to_property_name = 'RenamedValue'
         root_by_document_path = rename_owner_document(
             find_root_by_document_path, '.', from_property, to_property_name)
 
-        self.assertIn('Master.FCStd', root_by_document_path)
-        root = root_by_document_path['Master.FCStd']
-        expected_root = load_root('RenamedMasterDocument.xml')
+        self.assertIn('MainDocument.FCStd', root_by_document_path)
+        root = root_by_document_path['MainDocument.FCStd']
+        expected_root = load_root('RenamedMainDocument.xml')
         self.assertEqual(ElementTree.tostring(root),
                          ElementTree.tostring(expected_root))
 

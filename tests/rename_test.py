@@ -8,10 +8,10 @@ from fcxref.rename import make_rename
 
 
 def find_root_by_document_path(base_path: str, document_pattern: str = '*') -> Dict[str, Element]:
-    document = 'MasterDocument.xml' if document_pattern == 'Master' else 'Document.xml'
-    filepath = 'Master.FCStd' if document_pattern == 'Master' else 'Test.FCStd'
+    document = 'ExampleDocument' if document_pattern == '*' else document_pattern
+    filepath = '{}.FCStd'.format(document)
     return {
-        filepath: load_root(document)
+        filepath: load_root('{}.xml'.format(document))
     }
 
 
@@ -28,23 +28,23 @@ class RenameTest(unittest.TestCase):
         rename = make_rename(find_root_by_document_path)
 
         root_by_document_path = rename('base_path',
-                                       'Master',
+                                       'MainDocument',
                                        'Spreadsheet',
                                        ('Value', 'RenamedValue'))
 
         self.assertEqual(len(root_by_document_path.items()), 2)
 
-        self.assertIn('Test.FCStd', root_by_document_path)
-        document_root = root_by_document_path['Test.FCStd']
-        expected_document_root = load_root('RenamedDocument.xml')
+        self.assertIn('ExampleDocument.FCStd', root_by_document_path)
+        document_root = root_by_document_path['ExampleDocument.FCStd']
+        expected_document_root = load_root('RenamedExampleDocument.xml')
         self.assertEqual(ElementTree.tostring(document_root),
                          ElementTree.tostring(expected_document_root))
 
-        self.assertIn('Master.FCStd', root_by_document_path)
-        master_root = root_by_document_path['Master.FCStd']
-        expected_master_root = load_root('RenamedMasterDocument.xml')
-        self.assertEqual(ElementTree.tostring(master_root),
-                         ElementTree.tostring(expected_master_root))
+        self.assertIn('MainDocument.FCStd', root_by_document_path)
+        main_root = root_by_document_path['MainDocument.FCStd']
+        expected_main_root = load_root('RenamedMainDocument.xml')
+        self.assertEqual(ElementTree.tostring(main_root),
+                         ElementTree.tostring(expected_main_root))
 
 
 if __name__ == '__main__':

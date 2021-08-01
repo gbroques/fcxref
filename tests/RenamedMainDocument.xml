@@ -17,19 +17,19 @@
             <String value=""/>
         </Property>
         <Property name="CreationDate" type="App::PropertyString" status="16777217">
-            <String value="2021-07-30T13:38:36Z"/>
+            <String value="2021-08-01T19:27:10Z"/>
         </Property>
         <Property name="Id" type="App::PropertyString">
             <String value=""/>
         </Property>
         <Property name="Label" type="App::PropertyString" status="1">
-            <String value="Master"/>
+            <String value="MainDocument"/>
         </Property>
         <Property name="LastModifiedBy" type="App::PropertyString">
             <String value=""/>
         </Property>
         <Property name="LastModifiedDate" type="App::PropertyString" status="16777217">
-            <String value="2021-07-30T13:39:37Z"/>
+            <String value="2021-08-01T19:50:28Z"/>
         </Property>
         <Property name="License" type="App::PropertyString" status="1">
             <String value="All rights reserved"/>
@@ -37,11 +37,11 @@
         <Property name="LicenseURL" type="App::PropertyString" status="1">
             <String value="http://en.wikipedia.org/wiki/All_rights_reserved"/>
         </Property>
-        <Property name="Material" type="App::PropertyMap">
+        <Property name="Material" type="App::PropertyMap" status="1">
             <Map count="0">
             </Map>
         </Property>
-        <Property name="Meta" type="App::PropertyMap">
+        <Property name="Meta" type="App::PropertyMap" status="1">
             <Map count="0">
             </Map>
         </Property>
@@ -52,14 +52,17 @@
             <String value=""/>
         </Property>
         <Property name="Uid" type="App::PropertyUUID" status="16777217">
-            <Uuid value="0ee3df87-adf8-43dd-99c5-8cc31affb6c0"/>
+            <Uuid value="3d4d9004-16c0-4f48-a170-fff9da475e98"/>
         </Property>
     </Properties>
     <Objects Count="2" Dependencies="1">
         <ObjectDeps Name="Spreadsheet" Count="0"/>
-        <ObjectDeps Name="Box" Count="0"/>
-        <Object type="Spreadsheet::Sheet" name="Spreadsheet" id="3791" />
-        <Object type="Part::Box" name="Box" id="3792" />
+        <ObjectDeps Name="Box" Count="2">
+            <Dep Name="Spreadsheet"/>
+            <Dep Name="Spreadsheet"/>
+        </ObjectDeps>
+        <Object type="Spreadsheet::Sheet" name="Spreadsheet" id="2335" />
+        <Object type="Part::Box" name="Box" id="2336" />
     </Objects>
     <ObjectData Count="2">
         <Object name="Spreadsheet">
@@ -78,11 +81,13 @@
                     <Bool value="true"/>
                 </Property>
                 <Property name="cells" type="Spreadsheet::PropertySheet" status="67108864">
-                    <Cells Count="2" xlink="1">
+                    <Cells Count="4" xlink="1">
                         <XLinks count="0">
                         </XLinks>
                         <Cell address="A1" content="Value" />
-                        <Cell address="B1" content="5" alias="RenamedValue" />
+                        <Cell address="B1" content="10" alias="RenamedValue" />
+                        <Cell address="A2" content="RelativeReference" />
+                        <Cell address="B2" content="=.Value" />
                     </Cells>
                 </Property>
                 <Property name="columnWidths" type="Spreadsheet::PropertyColumnWidths" status="218103808">
@@ -108,7 +113,10 @@
                     <PropertyPlacement Px="0.0000000000000000" Py="0.0000000000000000" Pz="0.0000000000000000" Q0="0.0000000000000000" Q1="0.0000000000000000" Q2="0.0000000000000000" Q3="1.0000000000000000" A="0.0000000000000000" Ox="0.0000000000000000" Oy="0.0000000000000000" Oz="1.0000000000000000"/>
                 </Property>
                 <Property name="ExpressionEngine" type="App::PropertyExpressionEngine" status="67108864">
-                    <ExpressionEngine count="0">
+                    <ExpressionEngine count="3">
+                        <Expression path="Height" expression="&lt;&lt;MainDocument&gt;&gt;#&lt;&lt;Spreadsheet&gt;&gt;.Value"/>
+                        <Expression path="Width" expression="MainDocument#&lt;&lt;Spreadsheet&gt;&gt;.Value"/>
+                        <Expression path="Length" expression="Spreadsheet.Value"/>
                     </ExpressionEngine>
                 </Property>
                 <Property name="Height" type="App::PropertyLength">

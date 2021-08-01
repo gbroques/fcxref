@@ -17,19 +17,19 @@
             <String value=""/>
         </Property>
         <Property name="CreationDate" type="App::PropertyString" status="16777217">
-            <String value="2021-07-30T13:38:36Z"/>
+            <String value="2021-08-01T19:30:11Z"/>
         </Property>
         <Property name="Id" type="App::PropertyString">
             <String value=""/>
         </Property>
         <Property name="Label" type="App::PropertyString" status="1">
-            <String value="Master"/>
+            <String value="ExampleDocument"/>
         </Property>
         <Property name="LastModifiedBy" type="App::PropertyString">
             <String value=""/>
         </Property>
         <Property name="LastModifiedDate" type="App::PropertyString" status="16777217">
-            <String value="2021-07-30T13:39:37Z"/>
+            <String value="2021-08-01T19:31:09Z"/>
         </Property>
         <Property name="License" type="App::PropertyString" status="1">
             <String value="All rights reserved"/>
@@ -52,14 +52,17 @@
             <String value=""/>
         </Property>
         <Property name="Uid" type="App::PropertyUUID" status="16777217">
-            <Uuid value="0ee3df87-adf8-43dd-99c5-8cc31affb6c0"/>
+            <Uuid value="c84b0d77-79b9-4760-bdd3-9754fcb8b144"/>
         </Property>
     </Properties>
     <Objects Count="2" Dependencies="1">
         <ObjectDeps Name="Spreadsheet" Count="0"/>
-        <ObjectDeps Name="Box" Count="0"/>
-        <Object type="Spreadsheet::Sheet" name="Spreadsheet" id="3791" />
-        <Object type="Part::Box" name="Box" id="3792" />
+        <ObjectDeps Name="Box" Count="2">
+            <Dep Name="Spreadsheet"/>
+            <Dep Name="Spreadsheet"/>
+        </ObjectDeps>
+        <Object type="Spreadsheet::Sheet" name="Spreadsheet" id="4275" />
+        <Object type="Part::Box" name="Box" id="4276" />
     </Objects>
     <ObjectData Count="2">
         <Object name="Spreadsheet">
@@ -79,10 +82,12 @@
                 </Property>
                 <Property name="cells" type="Spreadsheet::PropertySheet" status="67108864">
                     <Cells Count="2" xlink="1">
-                        <XLinks count="0">
+                        <XLinks count="1" docs="1">
+                            <DocMap name="MainDocument" label="MainDocument" index="0"/>
+                            <XLink file="MainDocument.FCStd" stamp="2021-08-01T19:31:06Z" name="Spreadsheet"/>
                         </XLinks>
-                        <Cell address="A1" content="Value" />
-                        <Cell address="B1" content="5" alias="Value" />
+                        <Cell address="A1" content="RenamedValue" />
+                        <Cell address="B1" content="=MainDocument#Spreadsheet.RenamedValue" alias="RenamedValue" />
                     </Cells>
                 </Property>
                 <Property name="columnWidths" type="Spreadsheet::PropertyColumnWidths" status="218103808">
@@ -108,7 +113,8 @@
                     <PropertyPlacement Px="0.0000000000000000" Py="0.0000000000000000" Pz="0.0000000000000000" Q0="0.0000000000000000" Q1="0.0000000000000000" Q2="0.0000000000000000" Q3="1.0000000000000000" A="0.0000000000000000" Ox="0.0000000000000000" Oy="0.0000000000000000" Oz="1.0000000000000000"/>
                 </Property>
                 <Property name="ExpressionEngine" type="App::PropertyExpressionEngine" status="67108864">
-                    <ExpressionEngine count="0">
+                    <ExpressionEngine count="1">
+                        <Expression path="Length" expression="Spreadsheet.RenamedValue"/>
                     </ExpressionEngine>
                 </Property>
                 <Property name="Height" type="App::PropertyLength">

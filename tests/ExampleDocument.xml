@@ -17,19 +17,19 @@
             <String value=""/>
         </Property>
         <Property name="CreationDate" type="App::PropertyString" status="16777217">
-            <String value="2021-07-20T01:54:43Z"/>
+            <String value="2021-08-01T19:30:11Z"/>
         </Property>
         <Property name="Id" type="App::PropertyString">
             <String value=""/>
         </Property>
         <Property name="Label" type="App::PropertyString" status="1">
-            <String value="Child"/>
+            <String value="ExampleDocument"/>
         </Property>
         <Property name="LastModifiedBy" type="App::PropertyString">
             <String value=""/>
         </Property>
         <Property name="LastModifiedDate" type="App::PropertyString" status="16777217">
-            <String value="2021-07-25T20:04:35Z"/>
+            <String value="2021-08-01T19:31:09Z"/>
         </Property>
         <Property name="License" type="App::PropertyString" status="1">
             <String value="All rights reserved"/>
@@ -37,11 +37,11 @@
         <Property name="LicenseURL" type="App::PropertyString" status="1">
             <String value="http://en.wikipedia.org/wiki/All_rights_reserved"/>
         </Property>
-        <Property name="Material" type="App::PropertyMap" status="1">
+        <Property name="Material" type="App::PropertyMap">
             <Map count="0">
             </Map>
         </Property>
-        <Property name="Meta" type="App::PropertyMap" status="1">
+        <Property name="Meta" type="App::PropertyMap">
             <Map count="0">
             </Map>
         </Property>
@@ -52,14 +52,17 @@
             <String value=""/>
         </Property>
         <Property name="Uid" type="App::PropertyUUID" status="16777217">
-            <Uuid value="812d90c0-c2b5-4707-a34d-0f479b0ed827"/>
+            <Uuid value="c84b0d77-79b9-4760-bdd3-9754fcb8b144"/>
         </Property>
     </Properties>
     <Objects Count="2" Dependencies="1">
         <ObjectDeps Name="Spreadsheet" Count="0"/>
-        <ObjectDeps Name="Cylinder" Count="0"/>
-        <Object type="Spreadsheet::Sheet" name="Spreadsheet" id="2550" />
-        <Object type="Part::Cylinder" name="Cylinder" id="2551" />
+        <ObjectDeps Name="Box" Count="2">
+            <Dep Name="Spreadsheet"/>
+            <Dep Name="Spreadsheet"/>
+        </ObjectDeps>
+        <Object type="Spreadsheet::Sheet" name="Spreadsheet" id="4275" />
+        <Object type="Part::Box" name="Box" id="4276" />
     </Objects>
     <ObjectData Count="2">
         <Object name="Spreadsheet">
@@ -78,13 +81,13 @@
                     <Bool value="true"/>
                 </Property>
                 <Property name="cells" type="Spreadsheet::PropertySheet" status="67108864">
-                    <Cells Count="4" xlink="1">
+                    <Cells Count="2" xlink="1">
                         <XLinks count="1" docs="1">
-                            <DocMap name="Master" label="Master" index="0"/>
-                            <XLink file="Master.FCStd" stamp="2021-07-25T18:40:15Z" name="Spreadsheet"/>
+                            <DocMap name="MainDocument" label="MainDocument" index="0"/>
+                            <XLink file="MainDocument.FCStd" stamp="2021-08-01T19:31:06Z" name="Spreadsheet"/>
                         </XLinks>
-                        <Cell address="A1" content="RenamedValue" />
-                        <Cell address="A2" content="=Master#Spreadsheet.RenamedValue" alias="RenamedValue" />
+                        <Cell address="A1" content="Value" />
+                        <Cell address="B1" content="=MainDocument#Spreadsheet.Value" alias="Value" />
                     </Cells>
                 </Property>
                 <Property name="columnWidths" type="Spreadsheet::PropertyColumnWidths" status="218103808">
@@ -97,15 +100,12 @@
                 </Property>
             </Properties>
         </Object>
-        <Object name="Cylinder" Extensions="True">
+        <Object name="Box" Extensions="True">
             <Extensions Count="1">
                 <Extension type="Part::AttachExtension" name="AttachExtension">
                 </Extension>
             </Extensions>
             <Properties Count="15" TransientCount="0">
-                <Property name="Angle" type="App::PropertyAngle">
-                    <Float value="360.0000000000000000"/>
-                </Property>
                 <Property name="AttacherType" type="App::PropertyString" status="8">
                     <String value="Attacher::AttachEngine3D"/>
                 </Property>
@@ -113,25 +113,21 @@
                     <PropertyPlacement Px="0.0000000000000000" Py="0.0000000000000000" Pz="0.0000000000000000" Q0="0.0000000000000000" Q1="0.0000000000000000" Q2="0.0000000000000000" Q3="1.0000000000000000" A="0.0000000000000000" Ox="0.0000000000000000" Oy="0.0000000000000000" Oz="1.0000000000000000"/>
                 </Property>
                 <Property name="ExpressionEngine" type="App::PropertyExpressionEngine" status="67108864">
-                    <ExpressionEngine count="2" xlink="1">
-                        <XLinks count="2" docs="2">
-                            <DocMap name="Master" label="Master" index="1"/>
-                            <DocMap name="Cube" label="Cube" index="0"/>
-                            <XLink file="Cube.FCStd" stamp="2021-07-25T20:03:03Z" name="Box"/>
-                            <XLink file="Master.FCStd" stamp="2021-07-25T18:40:15Z" name="Spreadsheet"/>
-                        </XLinks>
-                        <Expression path="Height" expression="Cube#Box.Height"/>
-                        <Expression path="Radius" expression="Master#Spreadsheet.RenamedValue"/>
+                    <ExpressionEngine count="1">
+                        <Expression path="Length" expression="Spreadsheet.Value"/>
                     </ExpressionEngine>
                 </Property>
                 <Property name="Height" type="App::PropertyLength">
                     <Float value="10.0000000000000000"/>
                 </Property>
                 <Property name="Label" type="App::PropertyString" status="134217728">
-                    <String value="Cylinder"/>
+                    <String value="Cube"/>
                 </Property>
                 <Property name="Label2" type="App::PropertyString" status="67108992">
                     <String value=""/>
+                </Property>
+                <Property name="Length" type="App::PropertyLength">
+                    <Float value="10.0000000000000000"/>
                 </Property>
                 <Property name="MapMode" type="App::PropertyEnumeration">
                     <Integer value="0"/>
@@ -145,9 +141,6 @@
                 <Property name="Placement" type="App::PropertyPlacement" status="8388608">
                     <PropertyPlacement Px="0.0000000000000000" Py="0.0000000000000000" Pz="0.0000000000000000" Q0="0.0000000000000000" Q1="0.0000000000000000" Q2="0.0000000000000000" Q3="1.0000000000000000" A="0.0000000000000000" Ox="0.0000000000000000" Oy="0.0000000000000000" Oz="1.0000000000000000"/>
                 </Property>
-                <Property name="Radius" type="App::PropertyLength">
-                    <Float value="5.0000000000000000"/>
-                </Property>
                 <Property name="Shape" type="Part::PropertyPartShape">
                     <Part file="PartShape.brp"/>
                 </Property>
@@ -157,6 +150,9 @@
                 </Property>
                 <Property name="Visibility" type="App::PropertyBool" status="648">
                     <Bool value="true"/>
+                </Property>
+                <Property name="Width" type="App::PropertyLength">
+                    <Float value="10.0000000000000000"/>
                 </Property>
             </Properties>
         </Object>
