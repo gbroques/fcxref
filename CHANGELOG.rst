@@ -24,6 +24,7 @@ Removed
 
 Fixed
 ^^^^^
+* Rename all references to alias in owner document.
 * Fixed ``AttributeError`` when renaming and unable to find owner document
   
   * ``AttributeError: 'NoneType' object has no attribute 'items'``
