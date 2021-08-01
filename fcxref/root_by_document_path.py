@@ -13,11 +13,11 @@ def find_root_by_document_path(base_path: str, document_pattern: str = '*') -> D
     """Returns a dictionary where keys are document filepaths,
     and values are document xml root elements.
     """
-    document_paths = find_document_paths(base_path, document_pattern)
+    document_paths = _find_document_paths(base_path, document_pattern)
     return _parse_document_xmls(document_paths)
 
 
-def find_document_paths(base_path: str, document_pattern: str) -> List[str]:
+def _find_document_paths(base_path: str, document_pattern: str) -> List[str]:
     document_filename = '{}.FCStd'.format(document_pattern)
     pattern = Path(base_path).joinpath('**', document_filename).as_posix()
     return glob(pattern, recursive=True)
@@ -25,10 +25,24 @@ def find_document_paths(base_path: str, document_pattern: str) -> List[str]:
 
 def write_root_by_document_path(root_by_document_path: Dict[str, Element]) -> None:
     for document_path, root in root_by_document_path.items():
+        document_xml = ElementTree.tostring(root)
+        data_by_member = _get_data_by_member(document_path, document_xml)
         with ZipFile(document_path, 'w', ZIP_DEFLATED) as fcstd:
-            member = ZipInfo('Document.xml', time.localtime()[:6])
-            member.compress_type = ZIP_DEFLATED
-            fcstd.writestr(member, ElementTree.tostring(root))
+            for filename, data in data_by_member.items():
+                member = ZipInfo(filename, time.localtime()[:6])
+                member.compress_type = ZIP_DEFLATED
+                fcstd.writestr(member, data)
+
+
+def _get_data_by_member(document_path, document_xml) -> Dict[str, str]:
+    data_by_member = {}
+    with ZipFile(document_path, 'r', ZIP_DEFLATED) as fcstd:
+        for member in fcstd.infolist():
+            filename = member.filename
+            data = document_xml if filename == 'Document.xml' else fcstd.read(
+                filename)
+            data_by_member[filename] = data
+    return data_by_member
 
 
 def _parse_document_xmls(document_paths: List[str]) -> Dict[str, Element]:

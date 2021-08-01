@@ -9,6 +9,16 @@ and this project adheres to `Semantic Versioning <https://semver.org/spec/v2.0.0
 `[Unreleased]`__
 ----------------
 
+`[0.3.0]`__ - 2021-08-01
+------------------------
+
+Fixed
+^^^^^
+* Fixed renaming ``.FCStd`` files and losing all files besides ``Document.xml``.
+
+  * Examples of files being lost include ``GuiDocument.xml``, ``*.brp`` files, and others.
+  * The net-effect of this was that objects were hidden upon opening in FreeCAD after renaming.
+
 `[0.2.0]`__ - 2021-08-01
 ------------------------
 
