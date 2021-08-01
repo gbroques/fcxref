@@ -69,12 +69,10 @@ There are two ways to use ``fcxref``:
 1. via the Python API
 2. vai the Command Line
 
-The following 2 sections cover these 2 usage methods with the below example.
+The following 2 sections cover these 2 usage methods with documents in the ``example/`` directory.
 
-Consider you have ``Example.FCStd`` that contains two references to ``Master#Spreadsheet.Value``:
-
-1. in B1 of the ``Spreadsheet``
-2. and in the expression of ``Cylinder.Radius``.
+Consider you have a ``MainDocument.FCStd`` containing a spreadsheet that drives your model,
+and ``ExampleDocument.FCStd`` that references aliases in that spreadsheet.
 
 Python API
 ----------
@@ -86,13 +84,17 @@ find
 
    from fcxref import find, Property
    
-   base_path = './base/path/to/freecad/documents'
-   references = find(base_path, Property('Master', 'Spreadsheet', 'Value'))
-   print(references)
+   base_path = './example'
+   references = find(base_path, Property('MainDocument', 'Spreadsheet', 'Value'))
+   print('\n'.join(map(str, references)))
 
 .. code-block::
 
-   [Example.FCStd Spreadsheet.B1 (cells), Example.FCStd Cylinder.Radius (ExpressionEngine)]
+   ExampleDocument Spreadsheet.B1 (content)
+   ExampleDocument Spreadsheet.A1 (content)
+   ExampleDocument Spreadsheet.B1 (alias)
+   ExampleDocument Box.Length (expression)
+
 
 rename
 ^^^^^^
@@ -113,13 +115,13 @@ and values are XML `Element`_ objects representing updated ``Document.xml`` file
 
    from fcxref import rename
    
-   base_path = './base/path/to/freecad/documents'
-   root_by_document_path = find(base_path, 'Master', 'Spreadsheet', ('Value', 'RenamedValue'))
+   base_path = './example'
+   root_by_document_path = find(base_path, 'MainDocument', 'Spreadsheet', ('Value', 'RenamedValue'))
    print(root_by_document_path)
 
 .. code-block::
 
-   {'Example.FCStd': <Element 'Document' at 0x7efcd281cc20>, 'Master.FCStd': <Element 'Document' at 0x7f4d13c39270>}
+   {'ExampleDocument.FCStd': <Element 'Document' at 0x7efcd281cc20>, 'MainDocument.FCStd': <Element 'Document' at 0x7f4d13c39270>}
 
 Command Line
 ------------
@@ -170,10 +172,14 @@ Simple Queries
 
 .. code-block::
    
-   $ fcxref find Master Spreadsheet Value ↵
-   2 references to Master#Spreadsheet.Value found:
-     Example.FCStd Spreadsheet.B1 (cells)
-     Example.FCStd Cylinder.Radius (ExpressionEngine)
+   $ fcxref find MainDocument Spreadsheet Value ↵
+   ExampleDocument.FCStd
+     ExampleDocument Spreadsheet.B1 (content) [direct]
+     ExampleDocument Spreadsheet.A1 (content) [indirect]
+     ExampleDocument Spreadsheet.B1 (alias) [indirect]
+     ExampleDocument Box.Length (expression) [indirect]
+   
+   4 references to MainDocument#Spreadsheet.Value across 1 document(s) found.
 
 💡 **TIP:** When using special characters on the command line such as ``<`` and ``>`` for label names, surround the argument in double-quotes.
 
@@ -205,14 +211,14 @@ and defaults to "No" if an explicit "Yes" is not provided.
 
 .. code-block::
 
-   $ fcxref rename Master Spreadsheet Value RenamedValue ↵
-   The following 2 document(s) reference Master#Spreadsheet.Value:
-     Example.FCStd
-     Master.FCStd
+   $ fcxref rename MainDocument Spreadsheet Value RenamedValue ↵
+   The following 2 document(s) reference MainDocument#Spreadsheet.Value:
+     ExampleDocument.FCStd
+     MainDocument.FCStd
    
-   Do you wish to rename the references to Master#Spreadsheet.RenamedValue? [y/N] 
+   Do you wish to rename references to MainDocument#Spreadsheet.RenamedValue? [y/N] 
    y ↵
-   2 documents updated.
+   2 document(s) updated.
 
 Supported FreeCAD Versions
 --------------------------
