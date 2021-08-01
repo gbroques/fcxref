@@ -44,5 +44,5 @@ Added
 * Ability to **rename** exterenal references.
 
 __ https://github.com/gbroques/fcxref/compare/v0.2.0...HEAD
-__ https://github.com/gbroques/fcxref/compare/v0.2.0...v0.1.0
+__ https://github.com/gbroques/fcxref/compare/v0.1.0...v0.2.0
 __ https://github.com/gbroques/fcxref/releases/tag/v0.1.0
