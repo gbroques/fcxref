@@ -23,7 +23,7 @@ class FindTest(unittest.TestCase):
         references = find('base_path',
                           Property('Master', 'Spreadsheet', 'Value'))
 
-        self.assertEqual(len(references), 2)
+        self.assertEqual(len(references), 4)
 
         xpath0 = "ObjectData/Object[@name='Spreadsheet']/Properties/Property[@name='cells']/Cells/Cell[@address='A2']"
         self.assertEqual(references[0],
@@ -44,6 +44,26 @@ class FindTest(unittest.TestCase):
                                    'Radius',
                                    'Master#Spreadsheet.Value',
                                    xpath1))
+
+        xpath2 = "ObjectData/Object[@name='Spreadsheet']/Properties/Property[@name='cells']/Cells/Cell[@address='A1']"
+        self.assertEqual(references[2],
+                         Reference('Test.FCStd',
+                                   'Spreadsheet',
+                                   'cells',
+                                   'content',
+                                   'A1',
+                                   'Value',
+                                   xpath2))
+
+        xpath3 = "ObjectData/Object[@name='Spreadsheet']/Properties/Property[@name='cells']/Cells/Cell[@address='A2']"
+        self.assertEqual(references[3],
+                         Reference('Test.FCStd',
+                                   'Spreadsheet',
+                                   'cells',
+                                   'alias',
+                                   'A2',
+                                   'Value',
+                                   xpath3))
 
 
 if __name__ == '__main__':

@@ -63,7 +63,7 @@ def find_document_by_label(find_root_by_document_path: Callable[[str, str], Dict
 
 def find_document_by_name(find_root_by_document_path, base_path, document_name: str) -> Optional[Tuple[str, Element]]:
     wrapped = with_find_first_logging(find_root_by_document_path)
-    root_by_document_path = wrapped(base_path, document_name)
+    root_by_document_path = wrapped(base_path, document_name.replace('_', ' '))
     items = list(root_by_document_path.items())
     return None if len(items) == 0 else items[0]
 
@@ -76,7 +76,7 @@ def with_find_first_logging(find_root_by_document_path: Callable[[str, str], Dic
         if num_documents == 0:
             logger.info('No document named "{}" found.'.format(
                 document_pattern))
-            return None
+            return {}
         elif num_documents > 1:
             first = list(root_by_document_path.keys())[0]
             logger.warn('More than one document named "{}" found. Picking first:\n  {}'.format(

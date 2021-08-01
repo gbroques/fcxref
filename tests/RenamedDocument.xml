@@ -83,8 +83,8 @@
                             <DocMap name="Master" label="Master" index="0"/>
                             <XLink file="Master.FCStd" stamp="2021-07-25T18:40:15Z" name="Spreadsheet"/>
                         </XLinks>
-                        <Cell address="A1" content="Value" />
-                        <Cell address="A2" content="=Master#Spreadsheet.RenamedValue" alias="Value" />
+                        <Cell address="A1" content="RenamedValue" />
+                        <Cell address="A2" content="=Master#Spreadsheet.RenamedValue" alias="RenamedValue" />
                     </Cells>
                 </Property>
                 <Property name="columnWidths" type="Spreadsheet::PropertyColumnWidths" status="218103808">

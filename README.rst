@@ -82,9 +82,6 @@ Python API
 find
 ^^^^
 
-Simple Queries
-""""""""""""""
-
 .. code-block:: python
 
    from fcxref import find, Property
@@ -96,20 +93,6 @@ Simple Queries
 .. code-block::
 
    [Example.FCStd Spreadsheet.B1 (cells), Example.FCStd Cylinder.Radius (ExpressionEngine)]
-
-Regular Expressions
-"""""""""""""""""""
-
-You can pass in regular expressions for document, object, or property names for more powerful expressions.
-
-For example, query all external references to the ``Spreadsheet`` object in ``Master``:
-
-.. code-block:: python
-
-   from fcxref import find, Property
-      
-   base_path = './base/path/to/freecad/documents'
-   references = find(base_path, Property('Master', 'Spreadsheet', '.*'))
 
 rename
 ^^^^^^
@@ -192,20 +175,7 @@ Simple Queries
      Example.FCStd Spreadsheet.B1 (cells)
      Example.FCStd Cylinder.Radius (ExpressionEngine)
 
-Regular Expressions
-"""""""""""""""""""
-
-Regular expressions for more powerful queries are also supported:
-
-.. code-block::
-
-   $ fcxref find Master Spreadsheet ".*" ↵
-   3 references to Master#Spreadsheet..* found:
-   Example.FCStd Spreadsheet.B1 (cells) -> Master#Spreadsheet.Value
-   Example.FCStd Cylinder.Radius (ExpressionEngine) -> Master#Spreadsheet.Value
-   AnotherExample.FCStd Spreadsheet.A1 (cells) -> Master#Spreadsheet.AnotherValue
-
-💡 **TIP:** When using special characters on the command line such as ``.``, or ``<`` and ``>`` for label names, surround the argument in double-quotes.
+💡 **TIP:** When using special characters on the command line such as ``<`` and ``>`` for label names, surround the argument in double-quotes.
 
 rename
 ^^^^^^

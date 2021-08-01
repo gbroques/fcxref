@@ -9,13 +9,39 @@ and this project adheres to `Semantic Versioning <https://semver.org/spec/v2.0.0
 `[Unreleased]`__
 ----------------
 
+`[0.2.0]`__ - 2021-08-01
+------------------------
+
+Added
+^^^^^
+* Ability to find "indirect" text references to properties.
+
+  * When a spreadsheet cell or alias contains the property name separated by word boundaries.
+
+Removed
+^^^^^^^
+* Support for regular expressions when finding references.
+
+Fixed
+^^^^^
+* Fixed ``AttributeError`` when renaming and unable to find owner document
+  
+  * ``AttributeError: 'NoneType' object has no attribute 'items'``
+
+* Fixed finding owner document when name contains spaces.
+
+Changed
+^^^^^^^
+* find command CLI output.
+
 `[0.1.0]`__ - 2021-07-31
 ------------------------
 
 Added
 ^^^^^
-* Ability to **find** external references
-* Ability to **rename** exterenal references
+* Ability to **find** external references.
+* Ability to **rename** exterenal references.
 
-__ https://github.com/gbroques/fcxref/compare/v0.1.0...HEAD
+__ https://github.com/gbroques/fcxref/compare/v0.2.0...HEAD
+__ https://github.com/gbroques/fcxref/compare/v0.2.0...v0.1.0
 __ https://github.com/gbroques/fcxref/releases/tag/v0.1.0

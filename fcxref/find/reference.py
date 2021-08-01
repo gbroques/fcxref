@@ -1,3 +1,5 @@
+import os
+
 __all__ = ['Reference']
 
 
@@ -28,10 +30,10 @@ class Reference:
 
     def _to_string(self):
         return '{} {}.{} ({})'.format(
-            self.document_path,
+            format_document_path(self.document_path),
             self.object_name,
             self.location,
-            self.property_name)
+            self.reference_attribute)
 
     def __eq__(self, o: object) -> bool:
         if isinstance(o, Reference):
@@ -45,3 +47,7 @@ class Reference:
                 self.xpath == o.xpath
             )
         return False
+
+
+def format_document_path(document_path: str) -> str:
+    return os.path.splitext(os.path.basename(document_path))[0]

@@ -1,4 +1,5 @@
-from enum import Enum, unique
+import re
+from re import Pattern
 from typing import Callable, Dict, List
 from xml.etree.ElementTree import Element
 
@@ -6,31 +7,9 @@ from .match import Match
 from .property import Property
 from .reference import Reference
 from .xml_property import XMLProperty
+from .xml_property_name import XMLPropertyName
 
 __all__ = ['make_find']
-
-
-@unique
-class XMLPropertyName(Enum):
-    """Enumerates XML property names with potential cross-document references.
-
-    XML Examples::
-
-        <Property name="cells" type="Spreadsheet::PropertySheet" status="67108864">
-            ...
-        </Property>
-        <Property name="ExpressionEngine" type="App::PropertyExpressionEngine" status="67108864">
-            ...
-        </Property>
-
-    See `Core Changes: Link Properties <https://github.com/realthunder/FreeCAD_assembly3/wiki/Core-Changes#link-properties>`_:
-
-        A new class PropertyXLinkContainer is added to support more complex external link usage,
-        such as PropertyExpressionEngine and Spreadsheet::PropertySheet.
-
-    """
-    cells = 'cells'
-    ExpressionEngine = 'ExpressionEngine'
 
 
 def make_find(find_root_by_document_path: Callable[[str], Dict[str, Element]]):
@@ -38,36 +17,42 @@ def make_find(find_root_by_document_path: Callable[[str], Dict[str, Element]]):
         references = []
         root_by_document_path = find_root_by_document_path(base_path)
         for document_path, root in root_by_document_path.items():
+            property_pattern = re.compile(property.to_regex())
             references_in_document = find_references_in_root(
-                document_path, root, property)
+                document_path, root, property_pattern)
             references.extend(references_in_document)
+            if len(references_in_document):
+                text_pattern = re.compile(r'\b{}(?<!{})\b'.format(
+                    property.property_name, property.to_regex()))
+                text_references_in_document = find_references_in_root(
+                    document_path, root, text_pattern)
+                references.extend(text_references_in_document)
         return references
     return find
 
 
 def find_references_in_root(document_path: str,
                             root: Element,
-                            property: Property) -> List[Reference]:
+                            pattern: Pattern) -> List[Reference]:
     references = []
     xpath_template = "ObjectData/Object[@name='{}']/Properties/Property[@name='{}']"
-    
+
     object_data = root.find('ObjectData')
     for object in object_data.findall('Object'):
         properties_element = object.find('Properties')
         object_name = object.attrib['name']
 
         for property_element in properties_element.findall('Property'):
-            property_name = property_element.attrib['name']
-            property_xpath = xpath_template.format(object_name, property_name)
-            find_matches = make_find_matches(
-                property_element)
-            matches = find_matches(property)
+            property_element_name = property_element.attrib['name']
+            property_xpath = xpath_template.format(
+                object_name, property_element_name)
+            matches = find_matches(property_element, pattern)
             for match in matches:
                 xpath = property_xpath + '/' + match.location_xpath
                 references.append(
                     Reference(document_path,
                               object_name,
-                              property_name,
+                              property_element_name,
                               match.reference_attribute,
                               match.location,
                               match.matched_text,
@@ -75,15 +60,14 @@ def find_references_in_root(document_path: str,
     return references
 
 
-def make_find_matches(property_element: Element) -> Callable[[Property], List[Match]]:
-    def find_matches(property: Property) -> List[str]:
-        property_element_name = property_element.attrib['name']
-        if does_property_have_potential_references(property_element_name):
-            xml_property = create_xml_property(property_element)
-            return xml_property.find_matches(property)
-        else:
-            return []
-    return find_matches
+def find_matches(property_element: Element,
+                 pattern: Pattern) -> List[Match]:
+    property_element_name = property_element.attrib['name']
+    if does_property_have_potential_references(property_element_name):
+        xml_property = create_xml_property(property_element)
+        return xml_property.find_matches(pattern)
+    else:
+        return []
 
 
 def create_xml_property(property_element: Element) -> XMLProperty:
@@ -119,13 +103,13 @@ def create_xml_property(property_element: Element) -> XMLProperty:
         return XMLProperty(property_element,
                            nested_element_name='Cells',
                            child_element_name='Cell',
-                           reference_attribute='content',
+                           reference_attributes=['content', 'alias'],
                            location_attribute='address')
     elif property_element_name == XMLPropertyName.ExpressionEngine.value:
         return XMLProperty(property_element,
                            nested_element_name='ExpressionEngine',
                            child_element_name='Expression',
-                           reference_attribute='expression',
+                           reference_attributes=['expression'],
                            location_attribute='path')
     return None
 

@@ -3,6 +3,8 @@ import os
 
 from ._version import __version__
 from .find import Property, Reference, make_find
+from .group_references_by_document_path import \
+    group_references_by_document_path
 from .rename import make_rename
 from .root_by_document_path import (find_root_by_document_path,
                                     write_root_by_document_path)
@@ -53,17 +55,25 @@ def main():
         references = find(cwd, property)
 
         def format_reference(reference: Reference) -> str:
-            beginning_path = cwd + os.path.sep
-            formatted_reference = str(reference).replace(beginning_path, '')
-            if str(property) != reference.match:
-                formatted_reference += ' -> ' + reference.match
+            formatted_reference = str(reference)
+            word = 'direct' if str(property) == reference.match else 'indirect'
+            formatted_reference += ' [{}]'.format(word)
             return formatted_reference
 
-        if references:
-            num_references = len(references)
+        num_references = len(references)
+        if num_references > 0:
+            references_by_document_path = group_references_by_document_path(
+                references)
+            for document_path, references in references_by_document_path.items():
+                beginning_path = cwd + os.path.sep
+                formatted_path = str(document_path).replace(beginning_path, '')
+                print(formatted_path)
+                print('  ' + '\n  '.join(map(format_reference, references)))
+                print('')
+            num_documents = len(references_by_document_path.items())
             word = 'reference' if num_references == 1 else 'references'
-            print('{} {} to {} found:'.format(num_references, word, property))
-            print('  ' + '\n  '.join(map(format_reference, references)))
+            print('{} {} to {} across {} document(s) found.'.format(
+                num_references, word, property, num_documents))
         else:
             print('No references to {} found.'.format(property))
     elif command == 'rename':
@@ -92,7 +102,7 @@ def main():
             answer = query_yes_no(question, 'no')
             if answer:
                 write_root_by_document_path(renamed_root_by_document_path)
-                print('{} {} updated.'.format(num_documents, word))
+                print('{} document(s) updated.'.format(num_documents))
 
 
 def query_yes_no(question, default: str = 'yes'):
