@@ -1,4 +1,3 @@
-import re
 from re import Pattern
 from typing import Callable, List
 from xml.etree.ElementTree import Element

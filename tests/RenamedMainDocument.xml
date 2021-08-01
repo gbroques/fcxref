@@ -84,10 +84,10 @@
                     <Cells Count="4" xlink="1">
                         <XLinks count="0">
                         </XLinks>
-                        <Cell address="A1" content="Value" />
+                        <Cell address="A1" content="RenamedValue" />
                         <Cell address="B1" content="10" alias="RenamedValue" />
                         <Cell address="A2" content="RelativeReference" />
-                        <Cell address="B2" content="=.Value" />
+                        <Cell address="B2" content="=.RenamedValue" />
                     </Cells>
                 </Property>
                 <Property name="columnWidths" type="Spreadsheet::PropertyColumnWidths" status="218103808">
@@ -114,9 +114,9 @@
                 </Property>
                 <Property name="ExpressionEngine" type="App::PropertyExpressionEngine" status="67108864">
                     <ExpressionEngine count="3">
-                        <Expression path="Height" expression="&lt;&lt;MainDocument&gt;&gt;#&lt;&lt;Spreadsheet&gt;&gt;.Value"/>
-                        <Expression path="Width" expression="MainDocument#&lt;&lt;Spreadsheet&gt;&gt;.Value"/>
-                        <Expression path="Length" expression="Spreadsheet.Value"/>
+                        <Expression path="Height" expression="&lt;&lt;MainDocument&gt;&gt;#&lt;&lt;Spreadsheet&gt;&gt;.RenamedValue"/>
+                        <Expression path="Width" expression="MainDocument#&lt;&lt;Spreadsheet&gt;&gt;.RenamedValue"/>
+                        <Expression path="Length" expression="Spreadsheet.RenamedValue"/>
                     </ExpressionEngine>
                 </Property>
                 <Property name="Height" type="App::PropertyLength">

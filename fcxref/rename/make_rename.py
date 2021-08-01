@@ -1,5 +1,3 @@
-import re
-from copy import deepcopy
 from typing import Callable, Dict, List, Tuple
 from xml.etree.ElementTree import Element
 
@@ -7,6 +5,7 @@ from ..find import Property, Reference, make_find
 from ..group_references_by_document_path import \
     group_references_by_document_path
 from .rename_owner_document import rename_owner_document
+from .rename_references_in_root import rename_references_in_root
 
 
 def make_rename(find_root_by_document_path: Callable[[str], Dict[str, Element]]):
@@ -21,7 +20,8 @@ def make_rename(find_root_by_document_path: Callable[[str], Dict[str, Element]])
         from_property = Property(document, object_name, from_property_name)
         to_property = Property(document, object_name, to_property_name)
         references = find(base_path, from_property)
-        references_by_document_path = group_references_by_document_path(references)
+        references_by_document_path = group_references_by_document_path(
+            references)
         owner_document_path_by_root = rename_owner_document(
             find_root_by_document_path, base_path, from_property, to_property_name)
         root_by_document_path = rename_references_in_document_xml(root_by_document_path,
@@ -39,20 +39,6 @@ def rename_references_in_document_xml(root_by_document_path: Dict[str, Element],
     renamed_root_by_document_path = {}
     for document_path, references in references_by_document_path.items():
         root = root_by_document_path[document_path]
-        copy = deepcopy(root)
+        copy = rename_references_in_root(root, references, to_property)
         renamed_root_by_document_path[document_path] = copy
-        for reference in references:
-            element_with_reference = copy.find(reference.xpath)
-            expression_with_reference = element_with_reference.attrib[reference.reference_attribute]
-            replace_with = str(to_property) if is_fully_qualified_reference(
-                reference.match) else to_property.property_name
-            renamed = expression_with_reference.replace(
-                reference.match, replace_with)
-            element_with_reference.set(reference.reference_attribute, renamed)
     return renamed_root_by_document_path
-
-
-def is_fully_qualified_reference(string: str) -> bool:
-    pattern = re.compile(r'.*#.*\..*')
-    match = pattern.search(string)
-    return bool(match)

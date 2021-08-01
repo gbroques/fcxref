@@ -1,9 +1,11 @@
 import logging
-from copy import deepcopy
+import re
 from typing import Callable, Dict, Optional, Tuple
 from xml.etree.ElementTree import Element
 
 from ..find import Property
+from ..find.find_references_in_root import find_references_in_root
+from ..rename.rename_references_in_root import rename_references_in_root
 from .label import extract_label, is_label
 
 logger = logging.getLogger(__name__)
@@ -21,10 +23,9 @@ def rename_owner_document(find_root_by_document_path: Callable[[str, str], Dict[
     if document_path_root_pair is None:
         return None
     document_path, root = document_path_root_pair
-    copy = deepcopy(root)
 
     object_name = from_property.object_name
-    object_element = find_object_element(copy, object_name)
+    object_element = find_object_element(root, object_name)
     property_xpath = "Properties/Property[@name='{}']".format('cells')
     cell_xpath = "Cells/Cell[@alias='{}']".format(
         from_property.property_name)
@@ -32,6 +33,12 @@ def rename_owner_document(find_root_by_document_path: Callable[[str, str], Dict[
     cell_element = object_element.find(alias_xpath)
     if cell_element is not None:
         cell_element.set('alias', to_property_name)
+        pattern = re.compile(r'\b{}\b'.format(from_property.property_name))
+        references = find_references_in_root(document_path, root, pattern)
+        to_property = Property(from_property.document,
+                               from_property.object_name,
+                               to_property_name)
+        copy = rename_references_in_root(root, references, to_property)
         return {document_path: copy}
     return {}
 
