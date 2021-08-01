@@ -1,5 +1,5 @@
 from enum import Enum, unique
-from typing import Callable, Dict, List, Tuple
+from typing import Callable, Dict, List
 from xml.etree.ElementTree import Element
 
 from .match import Match
@@ -92,12 +92,12 @@ def create_xml_property(property_element: Element) -> XMLProperty:
 
         <Property name="cells" type="Spreadsheet::PropertySheet" status="67108864">
             <Cells Count="4" xlink="1">
-                <Cell address="B1" content="=Main#Spreadsheet.Value" alias="Value1" />
+                <Cell address="B1" content="=Main#Spreadsheet.Value" alias="Value" />
             </Cells>
         </Property>
         <Property name="ExpressionEngine" type="App::PropertyExpressionEngine" status="67108864">
             <ExpressionEngine count="2" xlink="1">
-                <Expression path="Radius" expression="Main#Spreadsheet.Value"/>
+                <Expression path="Radius" expression="Main#Spreadsheet.Value" />
             </ExpressionEngine>
         </Property>    
 

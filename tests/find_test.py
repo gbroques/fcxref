@@ -25,13 +25,13 @@ class FindTest(unittest.TestCase):
 
         self.assertEqual(len(references), 2)
 
-        xpath0 = "ObjectData/Object[@name='Spreadsheet']/Properties/Property[@name='cells']/Cells/Cell[@address='B1']"
+        xpath0 = "ObjectData/Object[@name='Spreadsheet']/Properties/Property[@name='cells']/Cells/Cell[@address='A2']"
         self.assertEqual(references[0],
                          Reference('Test.FCStd',
                                    'Spreadsheet',
                                    'cells',
                                    'content',
-                                   'B1',
+                                   'A2',
                                    'Master#Spreadsheet.Value',
                                    xpath0))
 

@@ -84,9 +84,7 @@
                             <XLink file="Master.FCStd" stamp="2021-07-25T18:40:15Z" name="Spreadsheet"/>
                         </XLinks>
                         <Cell address="A1" content="Value" />
-                        <Cell address="B1" content="=Master#Spreadsheet.Value" alias="Value" />
-                        <Cell address="D8" content="Value" />
-                        <Cell address="E8" content="=&lt;&lt;Master&gt;&gt;#&lt;&lt;Spreadsheet&gt;&gt;.Value" alias="Value2" />
+                        <Cell address="A2" content="=Master#Spreadsheet.Value" alias="Value" />
                     </Cells>
                 </Property>
                 <Property name="columnWidths" type="Spreadsheet::PropertyColumnWidths" status="218103808">

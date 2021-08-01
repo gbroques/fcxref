@@ -1,5 +1,5 @@
 import re
-from typing import Callable, List, Tuple
+from typing import Callable, List
 from xml.etree.ElementTree import Element
 
 from .property import Property
@@ -45,8 +45,8 @@ def make_find_references_in_property_element(child_element_name: str,
     """
     XML Examples::
 
-       <Cell address="B1" content="=Main#Spreadsheet.Value" alias="Value1" />
-       <Expression path="Radius" expression="Main#Spreadsheet.Value"/>
+       <Cell address="B1" content="=Main#Spreadsheet.Value" alias="Value" />
+       <Expression path="Radius" expression="Main#Spreadsheet.Value" />
 
     +--------------------+---------------------+--------------------+
     | child_element_name | reference_attribute | location_attribute |
