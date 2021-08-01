@@ -125,7 +125,7 @@ and values are XML `Element`_ objects representing updated ``Document.xml`` file
 
 Command Line
 ------------
-Upon installing ``fcxref``, the ``fcxref`` command will become globally accessible.
+Upon `installing <#installation>`_ ``fcxref``, the ``fcxref`` command will become globally accessible.
 
 For usage information, pass ``--help`` to each command.
 
