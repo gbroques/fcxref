@@ -27,6 +27,7 @@ setup(
             'fcxref=fcxref.cli:main'
         ]
     },
+    license='GNU Lesser General Public License v2 or later (LGPLv2+)',
     install_requires=[],
     classifiers=[
         # Full List: https://pypi.org/pypi?%3Aaction=list_classifiers
