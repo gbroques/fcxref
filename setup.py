@@ -1,7 +1,7 @@
 import io
 from os import path
 
-from setuptools import setup
+from setuptools import find_packages, setup
 
 version = {}
 with open('fcxref/_version.py') as fp:
@@ -19,7 +19,7 @@ setup(
     url='https://github.com/gbroques/fcxref',
     author='G Roques',
     version=version['__version__'],
-    packages=['fcxref'],
+    packages=find_packages(exclude=['tests']),
     # Incude data files specified in MANIFEST.in file.
     include_package_data=True,
     entry_points={
