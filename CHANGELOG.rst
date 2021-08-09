@@ -9,6 +9,12 @@ and this project adheres to `Semantic Versioning <https://semver.org/spec/v2.0.0
 `[Unreleased]`__
 ----------------
 
+`[0.3.1]`__ - 2021-08-09
+------------------------
+Fixed
+^^^^^
+* Fixed *not* including all packages in PyPI installation (see `#3 <https://github.com/gbroques/fcxref/issues/3>`_).
+
 `[0.3.0]`__ - 2021-08-01
 ------------------------
 
@@ -53,7 +59,8 @@ Added
 * Ability to **find** external references.
 * Ability to **rename** exterenal references.
 
-__ https://github.com/gbroques/fcxref/compare/v0.3.0...HEAD
+__ https://github.com/gbroques/fcxref/compare/v0.3.1...HEAD
+__ https://github.com/gbroques/fcxref/compare/v0.3.0...v0.3.1
 __ https://github.com/gbroques/fcxref/compare/v0.2.0...v0.3.0
 __ https://github.com/gbroques/fcxref/compare/v0.1.0...v0.2.0
 __ https://github.com/gbroques/fcxref/releases/tag/v0.1.0
