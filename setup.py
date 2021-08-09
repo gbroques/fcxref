@@ -20,6 +20,8 @@ setup(
     author='G Roques',
     version=version['__version__'],
     packages=['fcxref'],
+    # Incude data files specified in MANIFEST.in file.
+    include_package_data=True,
     entry_points={
         'console_scripts': [
             'fcxref=fcxref.cli:main'
