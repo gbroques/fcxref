@@ -29,7 +29,7 @@ The following operations are supported:
 
 1. *Finding* external references
 2. *Renaming* external references
-3. and *Removing* external references (**not yet implemented**)
+3. and *Removing* external references (i.e. ``XLinks``)
 
 Motivation
 ----------
@@ -116,12 +116,35 @@ and values are XML `Element`_ objects representing updated ``Document.xml`` file
    from fcxref import rename
    
    base_path = './example'
-   root_by_document_path = find(base_path, 'MainDocument', 'Spreadsheet', ('Value', 'RenamedValue'))
+   root_by_document_path = rename(base_path, 'MainDocument', 'Spreadsheet', ('Value', 'RenamedValue'))
    print(root_by_document_path)
 
 .. code-block::
 
    {'ExampleDocument.FCStd': <Element 'Document' at 0x7efcd281cc20>, 'MainDocument.FCStd': <Element 'Document' at 0x7f4d13c39270>}
+
+remove
+^^^^^^
+
+The ``remove`` function takes:
+
+1. the base path to look for FreeCAD documents in
+2. the name of the document (**label is not supported**)
+
+It returns a dictionary where keys are filepaths to updated ``.FCStd`` files,
+and values are XML `Element`_ objects representing updated ``Document.xml`` files.
+
+.. code-block:: python
+
+   from fcxref import remove
+   
+   base_path = './example'
+   root_by_document_path = remove(base_path, 'MainDocument')
+   print(root_by_document_path)
+
+.. code-block::
+
+   {'ExampleDocument.FCStd': <Element 'Document' at 0x7efcd281cc20>}
 
 Command Line
 ------------
@@ -136,18 +159,19 @@ Thus, you should navigate to a directory where you store your FreeCAD documents 
 .. code-block::
 
    $ fcxref --help ↵
-   usage: fcxref [-h] [--version] {find,rename} ...
+   usage: fcxref [-h] [--version] {find,rename,remove} ...
    
    Manage cross-document references to properties.
    
    optional arguments:
-     -h, --help     show this help message and exit
-     --version      show program's version number and exit
+     -h, --help            show this help message and exit
+     --version             show program's version number and exit
    
    Commands:
-     {find,rename}
-       find         Find cross-document references to a property
-       rename       Rename cross-document references to a property
+     {find,rename,remove}
+       find                Find cross-document references to a property
+       rename              Rename cross-document references to a property
+       remove              Remove XLinks to specified document
 
 find
 ^^^^
@@ -219,6 +243,38 @@ and defaults to "No" if an explicit "Yes" is not provided.
    Do you wish to rename references to MainDocument#Spreadsheet.RenamedValue? [y/N] 
    y ↵
    2 document(s) updated.
+
+remove
+^^^^^^
+
+.. code-block::
+
+   $ fcxref remove --help ↵
+   usage: fcxlink remove <document>
+   
+   Surround arguments containing special characters in quotes (e.g. "<<My Label>>").
+   
+   positional arguments:
+     document    Document name of XLinks to remove.
+   
+   optional arguments:
+     -h, --help  show this help message and exit
+
+Simple Removals
+"""""""""""""""
+
+The ``remove`` command will prompt users for confirmation before modifying any files,
+and defaults to "No" if an explicit "Yes" is not provided.
+
+.. code-block::
+
+   $ fcxref remove MainDocument ↵
+   The following 1 document(s) contain XLinks to MainDocument:
+     example/ExampleDocument.FCStd
+
+   Do you wish to remove XLinks to MainDocument? (this will break document linking) [y/N] 
+   y ↵
+   1 document(s) updated.
 
 Supported FreeCAD Versions
 --------------------------

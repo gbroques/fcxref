@@ -37,14 +37,14 @@ class RenameTest(unittest.TestCase):
         self.assertIn('ExampleDocument.FCStd', root_by_document_path)
         document_root = root_by_document_path['ExampleDocument.FCStd']
         expected_document_root = load_root('RenamedExampleDocument.xml')
-        self.assertEqual(ElementTree.tostring(document_root),
-                         ElementTree.tostring(expected_document_root))
+        self.assertMultiLineEqual(ElementTree.tostring(document_root).decode('utf-8'),
+                                  ElementTree.tostring(expected_document_root).decode('utf-8'))
 
         self.assertIn('MainDocument.FCStd', root_by_document_path)
         main_root = root_by_document_path['MainDocument.FCStd']
         expected_main_root = load_root('RenamedMainDocument.xml')
-        self.assertEqual(ElementTree.tostring(main_root),
-                         ElementTree.tostring(expected_main_root))
+        self.assertMultiLineEqual(ElementTree.tostring(main_root).decode('utf-8'),
+                                  ElementTree.tostring(expected_main_root).decode('utf-8'))
 
 
 if __name__ == '__main__':

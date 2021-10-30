@@ -9,6 +9,10 @@ and this project adheres to `Semantic Versioning <https://semver.org/spec/v2.0.0
 `[Unreleased]`__
 ----------------
 
+Added
+^^^^^
+* Ability to remove ``XLink`` references to a specified document name.
+
 `[0.3.1]`__ - 2021-08-09
 ------------------------
 Fixed

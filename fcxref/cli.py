@@ -1,16 +1,20 @@
 import argparse
 import os
 
+from fcxref.remove import remove
+
 from ._version import __version__
 from .find import Property, Reference, make_find
 from .group_references_by_document_path import \
     group_references_by_document_path
+from .remove import make_remove
 from .rename import make_rename
 from .root_by_document_path import (find_root_by_document_path,
                                     write_root_by_document_path)
 
 find = make_find(find_root_by_document_path)
 rename = make_rename(find_root_by_document_path)
+remove = make_remove(find_root_by_document_path)
 
 
 def main():
@@ -21,21 +25,22 @@ def main():
                                        dest='command',
                                        required=True)
 
+    # Find
     find_parser = subparsers.add_parser('find',
                                         help='Find cross-document references to a property',
                                         description='Surround arguments containing special characters in quotes (e.g. "<<My Label>>").',
                                         usage='fcxlink find <document> <object> <property>')
-
     find_parser.add_argument(
         'document', help='Document name or label.')
     find_parser.add_argument('object', help='Object name or label.')
     find_parser.add_argument('property', help='Property.')
+    # ---------------------------------------------------------
 
+    # Rename
     rename_parser = subparsers.add_parser('rename',
                                           help='Rename cross-document references to a property',
                                           description='Surround arguments containing special characters in quotes (e.g. "<<My Label>>").',
                                           usage='fcxlink rename <document> <object> <from_property> <to_property>')
-
     rename_parser.add_argument(
         'document', help='Document name or label of reference to rename.')
     rename_parser.add_argument(
@@ -44,6 +49,16 @@ def main():
         'from_property', help='Property of reference before renaming.')
     rename_parser.add_argument(
         'to_property', help='Property of reference after renaming.')
+    # ---------------------------------------------------------
+
+    # Remove
+    remove_parser = subparsers.add_parser('remove',
+                                          help='Remove XLinks to specified document',
+                                          description='Surround arguments containing special characters in quotes (e.g. "<<My Label>>").',
+                                          usage='fcxlink remove <document>')
+    remove_parser.add_argument(
+        'document', help='Document name of XLinks to remove.')
+    # ---------------------------------------------------------
 
     cwd = os.getcwd()
     args = parser.parse_args()
@@ -99,6 +114,27 @@ def main():
             print('  ' + '\n  '.join(map(format_document_path, document_paths)) + '\n')
             question = 'Do you wish to rename references to {}?'.format(
                 to_property)
+            answer = query_yes_no(question, 'no')
+            if answer:
+                write_root_by_document_path(renamed_root_by_document_path)
+                print('{} document(s) updated.'.format(num_documents))
+    elif command == 'remove':
+        document = args['document']
+        renamed_root_by_document_path = remove(cwd, document)
+        document_paths = renamed_root_by_document_path.keys()
+        num_documents = len(document_paths)
+        if num_documents == 0:
+            print('No documents contain XLinks to {}.'.format(document))
+        else:
+            print('The following {} document(s) contain XLinks to {}:'.format(
+                num_documents, document))
+
+            def format_document_path(document_path: str) -> str:
+                beginning_path = cwd + os.path.sep
+                return document_path.replace(beginning_path, '')
+            print('  ' + '\n  '.join(map(format_document_path, document_paths)) + '\n')
+            question = 'Do you wish to remove XLinks to {}? (this will break document linking)'.format(
+                document)
             answer = query_yes_no(question, 'no')
             if answer:
                 write_root_by_document_path(renamed_root_by_document_path)

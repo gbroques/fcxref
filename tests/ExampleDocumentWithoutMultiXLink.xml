@@ -68,7 +68,13 @@
         <Object name="Spreadsheet">
             <Properties Count="7" TransientCount="0">
                 <Property name="ExpressionEngine" type="App::PropertyExpressionEngine" status="67108864">
-                    <ExpressionEngine count="0">
+                    <ExpressionEngine count="1" xlink="1">
+                        <XLinks count="2" docs="2">
+                            <DocMap name="HexagonalStatorResinCast" label="HexagonalStatorResinCast" index="1" />
+                            <DocMap name="CircularStatorResinCast" label="CircularStatorResinCast" index="0" />
+                            <XLink file="CircularStatorResinCast.FCStd" stamp="2021-07-17T23:55:55Z" name="PadBody001" />
+                            <XLink file="HexagonalStatorResinCast.FCStd" stamp="2021-07-17T23:50:56Z" name="Body" />
+                            </XLinks>
                     </ExpressionEngine>
                 </Property>
                 <Property name="Label" type="App::PropertyString" status="134217728">
@@ -82,12 +88,13 @@
                 </Property>
                 <Property name="cells" type="Spreadsheet::PropertySheet" status="67108864">
                     <Cells Count="2" xlink="1">
-                        <XLinks count="1" docs="1">
-                            <DocMap name="MainDocument" label="MainDocument" index="0"/>
-                            <XLink file="MainDocument.FCStd" stamp="2021-08-01T19:31:06Z" name="Spreadsheet"/>
+                        <XLinks count="2" docs="1">
+                            <DocMap name="Cube" label="Cube" index="0" />
+                            <XLink file="Cube.FCStd" stamp="2021-07-25T20:03:03Z" name="Box1" />
+                            <XLink file="Cube.FCStd" stamp="2021-07-25T20:03:03Z" name="Box2" />
                         </XLinks>
-                        <Cell address="A1" content="RenamedValue" />
-                        <Cell address="B1" content="=MainDocument#Spreadsheet.RenamedValue" alias="RenamedValue" />
+                        <Cell address="A1" content="Value" />
+                        <Cell address="B1" content="=MainDocument#Spreadsheet.Value" alias="Value" />
                     </Cells>
                 </Property>
                 <Property name="columnWidths" type="Spreadsheet::PropertyColumnWidths" status="218103808">
@@ -115,10 +122,9 @@
                 <Property name="ExpressionEngine" type="App::PropertyExpressionEngine" status="67108864">
                     <ExpressionEngine count="1" xlink="1">
                         <XLinks count="1" docs="1">
-                            <DocMap name="MainDocument" label="MainDocument" index="0"/>
-                            <XLink file="MainDocument.FCStd" stamp="2021-07-25T18:40:15Z" name="Spreadsheet"/>
-                        </XLinks>
-                        <Expression path="Length" expression="MainDocument#Spreadsheet.RenamedValue"/>
+                            <DocMap name="Cube" label="Cube" index="0" />
+                            <XLink file="Cube.FCStd" stamp="2021-07-25T20:03:03Z" name="Box" />
+                            </XLinks>
                     </ExpressionEngine>
                 </Property>
                 <Property name="Height" type="App::PropertyLength">

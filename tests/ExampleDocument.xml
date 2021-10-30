@@ -113,8 +113,12 @@
                     <PropertyPlacement Px="0.0000000000000000" Py="0.0000000000000000" Pz="0.0000000000000000" Q0="0.0000000000000000" Q1="0.0000000000000000" Q2="0.0000000000000000" Q3="1.0000000000000000" A="0.0000000000000000" Ox="0.0000000000000000" Oy="0.0000000000000000" Oz="1.0000000000000000"/>
                 </Property>
                 <Property name="ExpressionEngine" type="App::PropertyExpressionEngine" status="67108864">
-                    <ExpressionEngine count="1">
-                        <Expression path="Length" expression="Spreadsheet.Value"/>
+                    <ExpressionEngine count="1" xlink="1">
+                        <XLinks count="1" docs="1">
+                            <DocMap name="MainDocument" label="MainDocument" index="0"/>
+                            <XLink file="MainDocument.FCStd" stamp="2021-07-25T18:40:15Z" name="Spreadsheet"/>
+                        </XLinks>
+                        <Expression path="Length" expression="MainDocument#Spreadsheet.Value"/>
                     </ExpressionEngine>
                 </Property>
                 <Property name="Height" type="App::PropertyLength">
