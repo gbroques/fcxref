@@ -8,12 +8,17 @@ from fcxref.find import Property, Reference, make_find
 
 
 def find_root_by_document_path(base_path: str) -> Dict[str, Element]:
-    document_xml_path = Path(__file__).parent.joinpath('ExampleDocument.xml')
-    with open(document_xml_path) as f:
-        document_xml = f.read()
     return {
-        'ExampleDocument.FCStd': ElementTree.fromstring(document_xml)
+        'ExampleDocument.FCStd': load_root('ExampleDocument.xml'),
+        'MainDocument.FCStd': load_root('MainDocument.xml'),
     }
+
+
+def load_root(document_xml_path: str) -> Element:
+    path = Path(__file__).parent.joinpath(document_xml_path)
+    with open(path) as f:
+        document_xml = f.read()
+    return ElementTree.fromstring(document_xml)
 
 
 class FindTest(unittest.TestCase):
@@ -23,7 +28,7 @@ class FindTest(unittest.TestCase):
         references = find('base_path',
                           Property('MainDocument', 'Spreadsheet', 'Value'))
 
-        self.assertEqual(len(references), 4)
+        self.assertEqual(len(references), 11)
 
         xpath0 = "ObjectData/Object[@name='Spreadsheet']/Properties/Property[@name='cells']/Cells/Cell[@address='B1']"
         self.assertEqual(references[0],
@@ -64,6 +69,7 @@ class FindTest(unittest.TestCase):
                                    'B1',
                                    'Value',
                                    xpath3))
+        print('\n'.join(map(str, references[4:])))
 
 
 if __name__ == '__main__':
