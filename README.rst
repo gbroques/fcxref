@@ -90,10 +90,10 @@ find
 
 .. code-block::
 
-   ExampleDocument Spreadsheet.B1 (content)
-   ExampleDocument Spreadsheet.A1 (content)
-   ExampleDocument Spreadsheet.B1 (alias)
-   ExampleDocument Box.Length (expression)
+   ExampleDocument Spreadsheet.B1 content
+   ExampleDocument Spreadsheet.A1 content
+   ExampleDocument Spreadsheet.B1 alias
+   ExampleDocument Box.Length expression
 
 
 rename
@@ -197,13 +197,10 @@ Simple Queries
 .. code-block::
    
    $ fcxref find MainDocument Spreadsheet Value ↵
-   ExampleDocument.FCStd
-     ExampleDocument Spreadsheet.B1 (content) [direct]
-     ExampleDocument Spreadsheet.A1 (content) [indirect]
-     ExampleDocument Spreadsheet.B1 (alias) [indirect]
-     ExampleDocument Box.Length (expression) [indirect]
-   
-   4 references to MainDocument#Spreadsheet.Value across 1 document(s) found.
+   ExampleDocument Spreadsheet.B1 content direct
+   ExampleDocument Spreadsheet.A1 content indirect
+   ExampleDocument Spreadsheet.B1 alias indirect
+   ExampleDocument Box.Length expression indirect
 
 💡 **TIP:** When using special characters on the command line such as ``<`` and ``>`` for label names, surround the argument in double-quotes.
 

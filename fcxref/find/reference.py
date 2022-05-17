@@ -39,7 +39,7 @@ class Reference:
         )
 
     def _to_string(self):
-        return '{} {}.{} ({})'.format(
+        return '{} {}.{} {}'.format(
             format_document_path(self.document_path),
             self.object_name,
             self.location,

@@ -15,6 +15,8 @@ Changed
 
   * The 3rd argument, ``property_name``, is now optional.
 
+* Simplify ``find`` CLI output.
+
 Added
 ^^^^^
 * Ability to remove ``XLink`` references to a specified document name.

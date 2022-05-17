@@ -5,8 +5,6 @@ from fcxref.remove import remove
 
 from ._version import __version__
 from .find import Query, Reference, make_find
-from .group_references_by_document_path import \
-    group_references_by_document_path
 from .remove import make_remove
 from .rename import make_rename
 from .root_by_document_path import (find_root_by_document_path,
@@ -72,23 +70,12 @@ def main():
         def format_reference(reference: Reference) -> str:
             formatted_reference = str(reference)
             word = 'direct' if str(property) == reference.match else 'indirect'
-            formatted_reference += ' [{}]'.format(word)
+            formatted_reference += ' {}'.format(word)
             return formatted_reference
 
         num_references = len(references)
         if num_references > 0:
-            references_by_document_path = group_references_by_document_path(
-                references)
-            for document_path, references in references_by_document_path.items():
-                beginning_path = cwd + os.path.sep
-                formatted_path = str(document_path).replace(beginning_path, '')
-                print(formatted_path)
-                print('  ' + '\n  '.join(map(format_reference, references)))
-                print('')
-            num_documents = len(references_by_document_path.items())
-            word = 'reference' if num_references == 1 else 'references'
-            print('{} {} to {} across {} document(s) found.'.format(
-                num_references, word, property, num_documents))
+            print('\n'.join(map(format_reference, references)))
         else:
             print('No references to {} found.'.format(property))
     elif command == 'rename':
