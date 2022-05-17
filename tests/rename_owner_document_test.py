@@ -4,7 +4,7 @@ from typing import Dict
 from xml.etree import ElementTree
 from xml.etree.ElementTree import Element
 
-from fcxref.find import Property
+from fcxref.find import Query
 from fcxref.rename.rename_owner_document import rename_owner_document
 
 
@@ -24,7 +24,7 @@ def load_root(document_xml_path: str) -> Element:
 class RenameOwnerDocumentTest(unittest.TestCase):
 
     def test_rename_owner_document_with_document_name_and_object_name(self):
-        from_property = Property('MainDocument', 'Spreadsheet', 'Value')
+        from_property = Query('MainDocument', 'Spreadsheet', 'Value')
         to_property_name = 'RenamedValue'
         root_by_document_path = rename_owner_document(
             find_root_by_document_path, '.', from_property, to_property_name)
@@ -36,7 +36,7 @@ class RenameOwnerDocumentTest(unittest.TestCase):
                          ElementTree.tostring(expected_root))
 
     def test_rename_owner_document_with_document_label_and_object_label(self):
-        from_property = Property('<<MainDocument>>', '<<Spreadsheet>>', 'Value')
+        from_property = Query('<<MainDocument>>', '<<Spreadsheet>>', 'Value')
         to_property_name = 'RenamedValue'
         root_by_document_path = rename_owner_document(
             find_root_by_document_path, '.', from_property, to_property_name)
@@ -48,7 +48,7 @@ class RenameOwnerDocumentTest(unittest.TestCase):
                          ElementTree.tostring(expected_root))
 
     def test_rename_owner_document_with_document_name_and_object_label(self):
-        from_property = Property('MainDocument', '<<Spreadsheet>>', 'Value')
+        from_property = Query('MainDocument', '<<Spreadsheet>>', 'Value')
         to_property_name = 'RenamedValue'
         root_by_document_path = rename_owner_document(
             find_root_by_document_path, '.', from_property, to_property_name)
@@ -60,7 +60,7 @@ class RenameOwnerDocumentTest(unittest.TestCase):
                          ElementTree.tostring(expected_root))
 
     def test_rename_owner_document_with_document_label_and_object_name(self):
-        from_property = Property('<<MainDocument>>', 'Spreadsheet', 'Value')
+        from_property = Query('<<MainDocument>>', 'Spreadsheet', 'Value')
         to_property_name = 'RenamedValue'
         root_by_document_path = rename_owner_document(
             find_root_by_document_path, '.', from_property, to_property_name)

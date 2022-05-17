@@ -3,14 +3,14 @@ from copy import deepcopy
 from typing import Dict, List
 from xml.etree.ElementTree import Element
 
-from ..find import Property, Reference
+from ..find import Query, Reference
 
 __all__ = ['rename_references_in_root']
 
 
 def rename_references_in_root(root: Dict[str, Element],
                               references: List[Reference],
-                              to_property: Property) -> Element:
+                              to_property: Query) -> Element:
     copy = deepcopy(root)
     for reference in references:
         element_with_reference = copy.find(reference.xpath)

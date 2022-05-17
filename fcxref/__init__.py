@@ -1,4 +1,4 @@
-from .find import Property, Reference, make_find
+from .find import Query, Reference, make_find
 from .group_references_by_document_path import \
     group_references_by_document_path
 from .remove import make_remove
@@ -14,6 +14,6 @@ __all__ = [
     'group_references_by_document_path',
     'rename',
     'remove',
-    'Property',
+    'Query',
     'Reference'
 ]

@@ -9,9 +9,16 @@ and this project adheres to `Semantic Versioning <https://semver.org/spec/v2.0.0
 `[Unreleased]`__
 ----------------
 
+Changed
+^^^^^^^
+* Renamed ``Property`` class to ``Query`` (**breaking change**).
+
+  * The 3rd argument, ``property_name``, is now optional.
+
 Added
 ^^^^^
 * Ability to remove ``XLink`` references to a specified document name.
+* Ability to find cross-document references to objects.
 
 `[0.3.1]`__ - 2021-08-09
 ------------------------

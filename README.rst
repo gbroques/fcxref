@@ -82,10 +82,10 @@ find
 
 .. code-block:: python
 
-   from fcxref import find, Property
+   from fcxref import find, Query
    
    base_path = './example'
-   references = find(base_path, Property('MainDocument', 'Spreadsheet', 'Value'))
+   references = find(base_path, Query('MainDocument', 'Spreadsheet', 'Value'))
    print('\n'.join(map(str, references)))
 
 .. code-block::
@@ -169,7 +169,7 @@ Thus, you should navigate to a directory where you store your FreeCAD documents 
    
    Commands:
      {find,rename,remove}
-       find                Find cross-document references to a property
+       find                Find cross-document references to an object or property
        rename              Rename cross-document references to a property
        remove              Remove XLinks to specified document
 
@@ -179,7 +179,7 @@ find
 .. code-block::
 
    $ fcxref find --help ↵                
-   usage: fcxlink find <document> <object> <property>
+   usage: fcxlink find <document> <object> [property]
    
    Surround arguments containing special characters in quotes (e.g. "<<My Label>>").
    

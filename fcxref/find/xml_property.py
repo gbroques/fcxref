@@ -53,13 +53,13 @@ def make_find_references_in_property_element(child_element_name: str,
     | Expression         | [expression]         | path               |
     +--------------------+----------------------+--------------------+
     """
-    def find_references_in_property_element(property_element: Element, property_pattern: Pattern) -> List[Match]:
+    def find_references_in_property_element(property_element: Element, pattern: Pattern) -> List[Match]:
         matches = []
         for child_element in property_element.findall(child_element_name):
             for reference_attribute in reference_attributes:
                 if reference_attribute in child_element.attrib:
                     content = child_element.attrib[reference_attribute]
-                    match = property_pattern.search(content)
+                    match = pattern.search(content)
                     if match:
                         matched_text = match.group(0)
                         location_xpath = "{}/{}[@{}='{}']".format(
@@ -72,6 +72,7 @@ def make_find_references_in_property_element(child_element_name: str,
                             Match(reference_attribute,
                                   child_element.attrib[location_attribute],
                                   matched_text,
+                                  content,
                                   location_xpath))
         return matches
     return find_references_in_property_element

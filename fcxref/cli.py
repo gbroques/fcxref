@@ -4,7 +4,7 @@ import os
 from fcxref.remove import remove
 
 from ._version import __version__
-from .find import Property, Reference, make_find
+from .find import Query, Reference, make_find
 from .group_references_by_document_path import \
     group_references_by_document_path
 from .remove import make_remove
@@ -27,13 +27,13 @@ def main():
 
     # Find
     find_parser = subparsers.add_parser('find',
-                                        help='Find cross-document references to a property',
+                                        help='Find cross-document references to an object or property',
                                         description='Surround arguments containing special characters in quotes (e.g. "<<My Label>>").',
-                                        usage='fcxlink find <document> <object> <property>')
+                                        usage='fcxlink find <document> <object> [property]')
     find_parser.add_argument(
         'document', help='Document name or label.')
     find_parser.add_argument('object', help='Object name or label.')
-    find_parser.add_argument('property', help='Property.')
+    find_parser.add_argument('property', help='Property.', nargs='?')
     # ---------------------------------------------------------
 
     # Rename
@@ -66,7 +66,7 @@ def main():
     args = vars(parser.parse_args())
     command = args.pop('command')
     if command == 'find':
-        property = Property(args['document'], args['object'], args['property'])
+        property = Query(args['document'], args['object'], args['property'])
         references = find(cwd, property)
 
         def format_reference(reference: Reference) -> str:
@@ -96,9 +96,9 @@ def main():
                                                args['document'],
                                                args['object'],
                                                (args['from_property'], args['to_property']))
-        from_property = Property(
+        from_property = Query(
             args['document'], args['object'], args['from_property'])
-        to_property = Property(
+        to_property = Query(
             args['document'], args['object'], args['to_property'])
         document_paths = renamed_root_by_document_path.keys()
         num_documents = len(document_paths)

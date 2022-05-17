@@ -35,6 +35,7 @@ def find_references_in_root(document_path: str,
                               match.reference_attribute,
                               match.location,
                               match.matched_text,
+                              match.content,
                               xpath))
     return references
 

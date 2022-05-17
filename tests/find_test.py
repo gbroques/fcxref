@@ -4,7 +4,7 @@ from typing import Dict
 from xml.etree import ElementTree
 from xml.etree.ElementTree import Element
 
-from fcxref.find import Property, Reference, make_find
+from fcxref.find import Query, Reference, make_find
 
 
 def find_root_by_document_path(base_path: str) -> Dict[str, Element]:
@@ -18,10 +18,10 @@ def find_root_by_document_path(base_path: str) -> Dict[str, Element]:
 
 class FindTest(unittest.TestCase):
 
-    def test_find(self):
+    def test_find_with_document_object_and_property(self):
         find = make_find(find_root_by_document_path)
         references = find('base_path',
-                          Property('MainDocument', 'Spreadsheet', 'Value'))
+                          Query('MainDocument', 'Spreadsheet', 'Value'))
 
         self.assertEqual(len(references), 4)
 
@@ -33,6 +33,7 @@ class FindTest(unittest.TestCase):
                                    'content',
                                    'B1',
                                    'MainDocument#Spreadsheet.Value',
+                                   '=MainDocument#Spreadsheet.Value',
                                    xpath0))
 
         xpath1 = "ObjectData/Object[@name='Box']/Properties/Property[@name='ExpressionEngine']/ExpressionEngine/Expression[@path='Length']"
@@ -42,6 +43,7 @@ class FindTest(unittest.TestCase):
                                    'ExpressionEngine',
                                    'expression',
                                    'Length',
+                                   'MainDocument#Spreadsheet.Value',
                                    'MainDocument#Spreadsheet.Value',
                                    xpath1))
 
@@ -53,6 +55,7 @@ class FindTest(unittest.TestCase):
                                    'content',
                                    'A1',
                                    'Value',
+                                   'Value',
                                    xpath2))
 
         xpath3 = "ObjectData/Object[@name='Spreadsheet']/Properties/Property[@name='cells']/Cells/Cell[@address='B1']"
@@ -63,7 +66,36 @@ class FindTest(unittest.TestCase):
                                    'alias',
                                    'B1',
                                    'Value',
+                                   'Value',
                                    xpath3))
+
+    def test_find_with_document_and_object(self):
+        find = make_find(find_root_by_document_path)
+        references = find('base_path', Query('MainDocument', 'Spreadsheet'))
+
+        self.assertEqual(len(references), 2)
+
+        xpath0 = "ObjectData/Object[@name='Spreadsheet']/Properties/Property[@name='cells']/Cells/Cell[@address='B1']"
+        self.assertEqual(references[0],
+                         Reference('ExampleDocument.FCStd',
+                                   'Spreadsheet',
+                                   'cells',
+                                   'content',
+                                   'B1',
+                                   'MainDocument#Spreadsheet',
+                                   '=MainDocument#Spreadsheet.Value',
+                                   xpath0))
+
+        xpath1 = "ObjectData/Object[@name='Box']/Properties/Property[@name='ExpressionEngine']/ExpressionEngine/Expression[@path='Length']"
+        self.assertEqual(references[1],
+                         Reference('ExampleDocument.FCStd',
+                                   'Box',
+                                   'ExpressionEngine',
+                                   'expression',
+                                   'Length',
+                                   'MainDocument#Spreadsheet',
+                                   'MainDocument#Spreadsheet.Value',
+                                   xpath1))
 
 
 if __name__ == '__main__':
