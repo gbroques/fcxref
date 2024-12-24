@@ -36,30 +36,19 @@ class FindTest(unittest.TestCase):
                                    '=MainDocument#Spreadsheet.Value',
                                    xpath0))
 
-        xpath1 = "ObjectData/Object[@name='Box']/Properties/Property[@name='ExpressionEngine']/ExpressionEngine/Expression[@path='Length']"
+        xpath1 = "ObjectData/Object[@name='Spreadsheet']/Properties/Property[@name='cells']/Cells/Cell[@address='A1']"
         self.assertEqual(references[1],
-                         Reference('ExampleDocument.FCStd',
-                                   'Box',
-                                   'ExpressionEngine',
-                                   'expression',
-                                   'Length',
-                                   'MainDocument#Spreadsheet.Value',
-                                   'MainDocument#Spreadsheet.Value',
-                                   xpath1))
-
-        xpath2 = "ObjectData/Object[@name='Spreadsheet']/Properties/Property[@name='cells']/Cells/Cell[@address='A1']"
-        self.assertEqual(references[2],
                          Reference('ExampleDocument.FCStd',
                                    'Spreadsheet',
                                    'cells',
                                    'content',
                                    'A1',
                                    'Value',
-                                   'Value',
-                                   xpath2))
+                                   '\'Value',
+                                   xpath1))
 
-        xpath3 = "ObjectData/Object[@name='Spreadsheet']/Properties/Property[@name='cells']/Cells/Cell[@address='B1']"
-        self.assertEqual(references[3],
+        xpath2 = "ObjectData/Object[@name='Spreadsheet']/Properties/Property[@name='cells']/Cells/Cell[@address='B1']"
+        self.assertEqual(references[2],
                          Reference('ExampleDocument.FCStd',
                                    'Spreadsheet',
                                    'cells',
@@ -67,13 +56,26 @@ class FindTest(unittest.TestCase):
                                    'B1',
                                    'Value',
                                    'Value',
+                                   xpath2))
+
+        xpath3 = "ObjectData/Object[@name='Box']/Properties/Property[@name='ExpressionEngine']/ExpressionEngine/Expression[@path='Length']"
+        repr(references[3])
+        self.assertEqual(references[3],
+                         Reference('ExampleDocument.FCStd',
+                                   'Box',
+                                   'ExpressionEngine',
+                                   'expression',
+                                   'Length',
+                                   'Value',
+                                   'Spreadsheet.Value',
                                    xpath3))
+
 
     def test_find_with_document_and_object(self):
         find = make_find(find_root_by_document_path)
         references = find('base_path', Query('MainDocument', 'Spreadsheet'))
 
-        self.assertEqual(len(references), 2)
+        self.assertEqual(len(references), 1)
 
         xpath0 = "ObjectData/Object[@name='Spreadsheet']/Properties/Property[@name='cells']/Cells/Cell[@address='B1']"
         self.assertEqual(references[0],
@@ -85,17 +87,6 @@ class FindTest(unittest.TestCase):
                                    'MainDocument#Spreadsheet',
                                    '=MainDocument#Spreadsheet.Value',
                                    xpath0))
-
-        xpath1 = "ObjectData/Object[@name='Box']/Properties/Property[@name='ExpressionEngine']/ExpressionEngine/Expression[@path='Length']"
-        self.assertEqual(references[1],
-                         Reference('ExampleDocument.FCStd',
-                                   'Box',
-                                   'ExpressionEngine',
-                                   'expression',
-                                   'Length',
-                                   'MainDocument#Spreadsheet',
-                                   'MainDocument#Spreadsheet.Value',
-                                   xpath1))
 
 
 if __name__ == '__main__':
