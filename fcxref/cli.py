@@ -69,6 +69,7 @@ def main():
 
         def format_reference(reference: Reference) -> str:
             formatted_reference = str(reference)
+            print(repr(reference))
             word = 'direct' if str(property) == reference.match else 'indirect'
             formatted_reference += ' {}'.format(word)
             return formatted_reference

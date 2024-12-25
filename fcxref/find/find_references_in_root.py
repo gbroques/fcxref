@@ -3,6 +3,7 @@ from typing import List
 from xml.etree.ElementTree import Element
 
 from .match import Match
+from .query import Query
 from .reference import Reference
 from .xml_property import XMLProperty
 from .xml_property_name import XMLPropertyName
@@ -12,7 +13,7 @@ __all__ = ['find_references_in_root']
 
 def find_references_in_root(document_path: str,
                             root: Element,
-                            pattern: Pattern) -> List[Reference]:
+                            query: Query) -> List[Reference]:
     references = []
     xpath_template = "ObjectData/Object[@name='{}']/Properties/Property[@name='{}']"
 
@@ -25,7 +26,7 @@ def find_references_in_root(document_path: str,
             property_element_name = property_element.attrib['name']
             property_xpath = xpath_template.format(
                 object_name, property_element_name)
-            matches = find_matches(property_element, pattern)
+            matches = find_matches(property_element, query)
             for match in matches:
                 xpath = property_xpath + '/' + match.location_xpath
                 references.append(
@@ -41,16 +42,16 @@ def find_references_in_root(document_path: str,
 
 
 def find_matches(property_element: Element,
-                 pattern: Pattern) -> List[Match]:
+                 query: Query) -> List[Match]:
     property_element_name = property_element.attrib['name']
     if does_property_have_potential_references(property_element_name):
-        xml_property = create_xml_property(property_element)
-        return xml_property.find_matches(pattern)
+        xml_property = create_xml_property(property_element, query)
+        return xml_property.find_matches()
     else:
         return []
 
 
-def create_xml_property(property_element: Element) -> XMLProperty:
+def create_xml_property(property_element: Element, query: Query) -> XMLProperty:
     """
     XML Examples::
 
@@ -84,15 +85,23 @@ def create_xml_property(property_element: Element) -> XMLProperty:
                            nested_element_name='Cells',
                            child_element_name='Cell',
                            reference_attributes=['content', 'alias'],
-                           location_attribute='address')
+                           location_attribute='address',
+                           pattern=query_to_bounded_property_pattern(query))
     elif property_element_name == XMLPropertyName.ExpressionEngine.value:
         return XMLProperty(property_element,
                            nested_element_name='ExpressionEngine',
                            child_element_name='Expression',
                            reference_attributes=['expression'],
-                           location_attribute='path')
+                           location_attribute='path',
+                           pattern=query_to_bounded_object_and_property_pattern(query))
     return None
 
+def query_to_bounded_property_pattern(query: Query) -> str:
+    return r'\b{}\b|{}'.format(query.property_name, query.to_regex())
+
+
+def query_to_bounded_object_and_property_pattern(query: Query) -> str:
+    return r'\b{}\.{}\b|{}'.format(query.object_name, query.property_name, query.to_regex())
 
 def does_property_have_potential_references(property_element_name: str) -> bool:
     return any([p for p in list(XMLPropertyName) if property_element_name == p.value])

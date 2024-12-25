@@ -27,7 +27,8 @@ class FindTest(unittest.TestCase):
         references = find('base_path',
                           Query('MainDocument', 'Spreadsheet', 'Value'))
 
-        self.assertEqual(len(references), 6)
+        self.assertEqual(len(references), 8)
+        print(references)
 
         xpath0 = "ObjectData/Object[@name='Spreadsheet']/Properties/Property[@name='cells']/Cells/Cell[@address='B1']"
         self.assertEqual(references[0],

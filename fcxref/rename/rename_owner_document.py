@@ -34,7 +34,7 @@ def rename_owner_document(find_root_by_document_path: Callable[[str, str], Dict[
     if cell_element is not None:
         cell_element.set('alias', to_property_name)
         pattern = re.compile(r'\b{}\b'.format(from_property.property_name))
-        references = find_references_in_root(document_path, root, pattern)
+        references = find_references_in_root(document_path, root, from_property)
         to_property = Query(from_property.document,
                                from_property.object_name,
                                to_property_name)
