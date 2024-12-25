@@ -30,7 +30,7 @@
             <String value=""/>
         </Property>
         <Property name="LastModifiedDate" type="App::PropertyString" status="16777217">
-            <String value="2024-12-25T02:41:29Z"/>
+            <String value="2024-12-25T02:54:38Z"/>
         </Property>
         <Property name="License" type="App::PropertyString" status="1">
             <String value="All rights reserved"/>
@@ -100,13 +100,15 @@
                     <Bool value="true"/>
                 </Property>
                 <Property name="cells" type="Spreadsheet::PropertySheet" status="67108864">
-                    <Cells Count="4" xlink="1">
+                    <Cells Count="6" xlink="1">
                         <XLinks count="0">
                         </XLinks>
                         <Cell address="A1" content="&apos;Value" />
                         <Cell address="B1" content="10" alias="Value" />
                         <Cell address="A2" content="&apos;RelativeReference" />
                         <Cell address="B2" content="=Value" />
+                        <Cell address="A3" content="&apos;ValueOther" />
+                        <Cell address="B3" content="20" alias="ValueOther" />
                     </Cells>
                 </Property>
                 <Property name="columnWidths" type="Spreadsheet::PropertyColumnWidths" status="218103808">
@@ -146,13 +148,13 @@
                 </Property>
                 <Property name="ExpressionEngine" type="App::PropertyExpressionEngine" status="67108864">
                     <ExpressionEngine count="3">
-                        <Expression path="Height" expression="&lt;&lt;Spreadsheet&gt;&gt;.Value"/>
+                        <Expression path="Height" expression="Spreadsheet.ValueOther"/>
                         <Expression path="Length" expression="Spreadsheet.Value"/>
                         <Expression path="Width" expression="&lt;&lt;Spreadsheet&gt;&gt;.Value"/>
                     </ExpressionEngine>
                 </Property>
                 <Property name="Height" type="App::PropertyLength">
-                    <Float value="10.0000000000000000"/>
+                    <Float value="20.0000000000000000"/>
                 </Property>
                 <Property name="Label" type="App::PropertyString" status="134217728">
                     <String value="Cube"/>
