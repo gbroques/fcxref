@@ -33,7 +33,7 @@ class Reference:
             f'          property_name="{self.property_name}",\n' +
             f'          reference_attribute="{self.reference_attribute}",\n' +
             f'          location="{self.location}",\n' +
-            f'          location="{self.match}",\n' +
+            f'          match="{self.match}",\n' +
             f'          content="{self.content}",\n' +
             f'          xpath="{self.xpath}")'
         )
