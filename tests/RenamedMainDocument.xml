@@ -30,7 +30,7 @@
             <String value=""/>
         </Property>
         <Property name="LastModifiedDate" type="App::PropertyString" status="16777217">
-            <String value="2024-12-25T03:06:10Z"/>
+            <String value="2024-12-25T03:26:09Z"/>
         </Property>
         <Property name="License" type="App::PropertyString" status="1">
             <String value="All rights reserved"/>
@@ -74,16 +74,20 @@
             <Bool value="true"/>
         </Property>
     </Properties>
-    <Objects Count="2" Dependencies="1">
+    <Objects Count="3" Dependencies="1">
         <ObjectDeps Name="Spreadsheet" Count="0"/>
-        <ObjectDeps Name="Box" Count="2">
+        <ObjectDeps Name="Box" Count="4">
+            <Dep Name="Cylinder"/>
             <Dep Name="Spreadsheet"/>
+            <Dep Name="Cylinder"/>
             <Dep Name="Spreadsheet"/>
         </ObjectDeps>
+        <ObjectDeps Name="Cylinder" Count="0"/>
         <Object type="Spreadsheet::Sheet" name="Spreadsheet" id="2335" />
         <Object type="Part::Box" name="Box" id="2336" />
+        <Object type="Part::Cylinder" name="Cylinder" id="2337" />
     </Objects>
-    <ObjectData Count="2">
+    <ObjectData Count="3">
         <Object name="Spreadsheet">
             <Properties Count="7" TransientCount="0">
                 <Property name="ExpressionEngine" type="App::PropertyExpressionEngine" status="67108864">
@@ -148,13 +152,13 @@
                 </Property>
                 <Property name="ExpressionEngine" type="App::PropertyExpressionEngine" status="67108864">
                     <ExpressionEngine count="3">
-                        <Expression path="Height" expression="Spreadsheet.ValueOther"/>
+                        <Expression path="Height" expression="Cylinder.RenamedValue"/>
                         <Expression path="Length" expression="Spreadsheet.RenamedValue"/>
                         <Expression path="Width" expression="&lt;&lt;Spreadsheet&gt;&gt;.RenamedValue"/>
                     </ExpressionEngine>
                 </Property>
                 <Property name="Height" type="App::PropertyLength">
-                    <Float value="20.0000000000000000"/>
+                    <Float value="10.0000000000000000"/>
                 </Property>
                 <Property name="Label" type="App::PropertyString" status="134217728">
                     <String value="Cube"/>
@@ -192,6 +196,85 @@
                 </Property>
                 <Property name="Width" type="App::PropertyLength">
                     <Float value="10.0000000000000000"/>
+                </Property>
+            </Properties>
+        </Object>
+        <Object name="Cylinder" Extensions="True">
+            <Extensions Count="2">
+                <Extension type="Part::AttachExtension" name="AttachExtension">
+                </Extension>
+                <Extension type="Part::PrismExtension" name="PrismExtension">
+                </Extension>
+            </Extensions>
+            <Properties Count="20" TransientCount="0">
+                <Property name="Angle" type="App::PropertyAngle">
+                    <Float value="360.0000000000000000"/>
+                </Property>
+                <Property name="AttacherEngine" type="App::PropertyEnumeration">
+                    <Integer value="0" CustomEnum="true"/>
+                    <CustomEnumList count="4">
+                        <Enum value="Engine 3D"/>
+                        <Enum value="Engine Plane"/>
+                        <Enum value="Engine Line"/>
+                        <Enum value="Engine Point"/>
+                    </CustomEnumList>
+                </Property>
+                <Property name="AttacherType" type="App::PropertyString" status="83886080">
+                    <String value="Attacher::AttachEngine3D"/>
+                </Property>
+                <Property name="AttachmentOffset" type="App::PropertyPlacement" status="8">
+                    <PropertyPlacement Px="0.0000000000000000" Py="0.0000000000000000" Pz="0.0000000000000000" Q0="0.0000000000000000" Q1="0.0000000000000000" Q2="0.0000000000000000" Q3="1.0000000000000000" A="0.0000000000000000" Ox="0.0000000000000000" Oy="0.0000000000000000" Oz="1.0000000000000000"/>
+                </Property>
+                <Property name="AttachmentSupport" type="App::PropertyLinkSubList">
+                    <LinkSubList count="0">
+                    </LinkSubList>
+                </Property>
+                <Property name="ExpressionEngine" type="App::PropertyExpressionEngine" status="67108864">
+                    <ExpressionEngine count="0">
+                    </ExpressionEngine>
+                </Property>
+                <Property name="FirstAngle" type="App::PropertyAngle">
+                    <Float value="0.0000000000000000"/>
+                </Property>
+                <Property name="Height" type="App::PropertyLength">
+                    <Float value="10.0000000000000000"/>
+                </Property>
+                <Property name="Label" type="App::PropertyString" status="134217728">
+                    <String value="Cylinder"/>
+                </Property>
+                <Property name="Label2" type="App::PropertyString" status="67108992">
+                    <String value=""/>
+                </Property>
+                <Property name="MapMode" type="App::PropertyEnumeration">
+                    <Integer value="0"/>
+                </Property>
+                <Property name="MapPathParameter" type="App::PropertyFloat" status="8">
+                    <Float value="0.0000000000000000"/>
+                </Property>
+                <Property name="MapReversed" type="App::PropertyBool" status="8">
+                    <Bool value="false"/>
+                </Property>
+                <Property name="Placement" type="App::PropertyPlacement" status="8388608">
+                    <PropertyPlacement Px="0.0000000000000000" Py="0.0000000000000000" Pz="0.0000000000000000" Q0="0.0000000000000000" Q1="0.0000000000000000" Q2="0.0000000000000000" Q3="1.0000000000000000" A="0.0000000000000000" Ox="0.0000000000000000" Oy="0.0000000000000000" Oz="1.0000000000000000"/>
+                </Property>
+                <Property name="Radius" type="App::PropertyLength">
+                    <Float value="2.0000000000000000"/>
+                </Property>
+                <Property name="SecondAngle" type="App::PropertyAngle">
+                    <Float value="0.0000000000000000"/>
+                </Property>
+                <Property name="Shape" type="Part::PropertyPartShape">
+                    <Part ElementMap="0.4" file="Cylinder.Shape.brp"/>
+                    <ElementMap/>
+                </Property>
+                <Property name="ShapeMaterial" type="Materials::PropertyMaterial">
+                    <PropertyMaterial uuid="7f9fd73b-50c9-41d8-b7b2-575a030c1eeb"/>
+                </Property>
+                <Property name="Value" type="App::PropertyFloat" group="Base" doc="" attr="0" ro="0" hide="0" status="2097152">
+                    <Float value="10.0000000000000000"/>
+                </Property>
+                <Property name="Visibility" type="App::PropertyBool" status="648">
+                    <Bool value="true"/>
                 </Property>
             </Properties>
         </Object>
