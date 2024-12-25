@@ -28,14 +28,14 @@ class Reference:
 
     def __repr__(self):
         return (
-            f'Reference("{self.document_path}",\n' +
-            f'          "{self.object_name}",\n' +
-            f'          "{self.property_name}",\n' +
-            f'          "{self.reference_attribute}",\n' +
-            f'          "{self.location}",\n' +
-            f'          "{self.match}",\n' +
-            f'          "{self.content}",\n' +
-            f'          "{self.xpath}")'
+            f'Reference(document_path="{self.document_path}",\n' +
+            f'          object_name="{self.object_name}",\n' +
+            f'          property_name="{self.property_name}",\n' +
+            f'          reference_attribute="{self.reference_attribute}",\n' +
+            f'          location="{self.location}",\n' +
+            f'          location="{self.match}",\n' +
+            f'          content="{self.content}",\n' +
+            f'          xpath="{self.xpath}")'
         )
 
     def _to_string(self):
