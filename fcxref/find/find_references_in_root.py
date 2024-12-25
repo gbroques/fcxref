@@ -1,9 +1,11 @@
 import logging
+from pathlib import Path
 from re import Pattern
 from typing import List
 from xml.etree.ElementTree import Element
 
 from .match import Match
+from .query import Query
 from .reference import Reference
 from .xml_property import XMLProperty
 from .xml_property_name import XMLPropertyName
@@ -14,7 +16,7 @@ logger = logging.getLogger(__name__)
 
 def find_references_in_root(document_path: str,
                             root: Element,
-                            pattern: Pattern) -> List[Reference]:
+                            query: Query) -> List[Reference]:
     references = []
     xpath_template = "ObjectData/Object[@name='{}']/Properties/Property[@name='{}']"
 
@@ -28,7 +30,7 @@ def find_references_in_root(document_path: str,
             property_element_name = property_element.attrib['name']
             property_xpath = xpath_template.format(
                 object_name, property_element_name)
-            matches = find_matches(property_element, pattern)
+            matches = find_matches(document_path, property_element, query)
             for match in matches:
                 xpath = property_xpath + '/' + match.location_xpath
                 reference = Reference(document_path,
@@ -44,18 +46,19 @@ def find_references_in_root(document_path: str,
     return references
 
 
-def find_matches(property_element: Element,
-                 pattern: Pattern) -> List[Match]:
+def find_matches(document_path: str,
+                 property_element: Element,
+                 query: Query) -> List[Match]:
     property_element_name = property_element.attrib['name']
     if does_property_have_potential_references(property_element_name):
         logger.debug(f"Checking   Properties/Property[@name='{property_element_name}']")
-        xml_property = create_xml_property(property_element)
-        return xml_property.find_matches(pattern)
+        xml_property = create_xml_property(document_path, property_element, query)
+        return xml_property.find_matches()
     else:
         return []
 
 
-def create_xml_property(property_element: Element) -> XMLProperty:
+def create_xml_property(document_path, property_element: Element, query) -> XMLProperty:
     """
     XML Examples::
 
@@ -84,18 +87,21 @@ def create_xml_property(property_element: Element) -> XMLProperty:
     * `Expression Engine <https://github.com/FreeCAD/FreeCAD/blob/0.19.2/src/App/PropertyExpressionEngine.cpp#L163-L185>`_
     """
     property_element_name = property_element.attrib['name']
+    document = Path(document_path).stem
     if property_element_name == XMLPropertyName.cells.value:
         return XMLProperty(property_element,
                            nested_element_name='Cells',
                            child_element_name='Cell',
                            reference_attributes=['content', 'alias'],
-                           location_attribute='address')
+                           location_attribute='address',
+                           pattern=r'\b{}\b'.format(query.property_name) if document == query.document else query.to_regex())
     elif property_element_name == XMLPropertyName.ExpressionEngine.value:
         return XMLProperty(property_element,
                            nested_element_name='ExpressionEngine',
                            child_element_name='Expression',
                            reference_attributes=['expression'],
-                           location_attribute='path')
+                           location_attribute='path',
+                           pattern=r'\b{}\.{}\b'.format(query.object_name, query.property_name) if document == query.document else query.to_regex())
     return None
 
 

@@ -1,4 +1,5 @@
 import os
+from pathlib import Path
 
 __all__ = ['Reference']
 
@@ -23,6 +24,10 @@ class Reference:
         self.content = content
         self.xpath = xpath
 
+    @property
+    def document(self):
+        return extract_document_name(self.document_path)
+
     def __str__(self):
         return self._to_string()
 
@@ -40,7 +45,7 @@ class Reference:
 
     def _to_string(self):
         return '{} {}.{} {}'.format(
-            format_document_path(self.document_path),
+            extract_document_name(self.document_path),
             self.object_name,
             self.location,
             self.reference_attribute)
@@ -60,5 +65,5 @@ class Reference:
         return False
 
 
-def format_document_path(document_path: str) -> str:
-    return os.path.splitext(os.path.basename(document_path))[0]
+def extract_document_name(document_path: str) -> str:
+    return Path(document_path).stem

@@ -1,4 +1,5 @@
 from re import Pattern
+import re
 from typing import Callable, List
 from xml.etree.ElementTree import Element
 
@@ -18,17 +19,19 @@ class XMLProperty:
                  nested_element_name: str,
                  child_element_name: str,
                  reference_attributes: List[str],
-                 location_attribute: str) -> None:
+                 location_attribute: str,
+                 pattern: str) -> None:
         self.property_element = property_element
         self.nested_element_name = nested_element_name
         self.child_element_name = child_element_name
         self.reference_attributes = reference_attributes
         self.location_attribute = location_attribute
+        self.pattern = re.compile(pattern)
 
-    def find_matches(self, pattern: Pattern) -> List[Match]:
+    def find_matches(self) -> List[Match]:
         find_references = self._make_find_references()
         nested_element = self.property_element.find(self.nested_element_name)
-        return find_references(nested_element, pattern)
+        return find_references(nested_element, self.pattern)
 
     def _make_find_references(self) -> Callable[[Element, Pattern], List[Match]]:
         return make_find_references_in_property_element(self.child_element_name,
