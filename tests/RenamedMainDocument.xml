@@ -30,7 +30,7 @@
             <String value=""/>
         </Property>
         <Property name="LastModifiedDate" type="App::PropertyString" status="16777217">
-            <String value="2024-12-25T02:54:38Z"/>
+            <String value="2024-12-25T03:06:10Z"/>
         </Property>
         <Property name="License" type="App::PropertyString" status="1">
             <String value="All rights reserved"/>
@@ -126,7 +126,7 @@
                 <Extension type="Part::AttachExtension" name="AttachExtension">
                 </Extension>
             </Extensions>
-            <Properties Count="17" TransientCount="0">
+            <Properties Count="18" TransientCount="0">
                 <Property name="AttacherEngine" type="App::PropertyEnumeration">
                     <Integer value="0" CustomEnum="true"/>
                     <CustomEnumList count="4">
@@ -183,6 +183,9 @@
                 </Property>
                 <Property name="ShapeMaterial" type="Materials::PropertyMaterial">
                     <PropertyMaterial uuid="7f9fd73b-50c9-41d8-b7b2-575a030c1eeb"/>
+                </Property>
+                <Property name="Value" type="App::PropertyFloat" group="Base" doc="" attr="0" ro="0" hide="0" status="2097152">
+                    <Float value="1.0000000000000000"/>
                 </Property>
                 <Property name="Visibility" type="App::PropertyBool" status="648">
                     <Bool value="true"/>
