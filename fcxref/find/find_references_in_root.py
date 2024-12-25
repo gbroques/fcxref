@@ -1,3 +1,4 @@
+import logging
 from re import Pattern
 from typing import List
 from xml.etree.ElementTree import Element
@@ -9,6 +10,7 @@ from .xml_property_name import XMLPropertyName
 
 __all__ = ['find_references_in_root']
 
+logger = logging.getLogger(__name__)
 
 def find_references_in_root(document_path: str,
                             root: Element,
@@ -20,6 +22,7 @@ def find_references_in_root(document_path: str,
     for object in object_data.findall('Object'):
         properties_element = object.find('Properties')
         object_name = object.attrib['name']
+        logger.debug(f"Checking ObjectData/Object[@name='{object_name}']")
 
         for property_element in properties_element.findall('Property'):
             property_element_name = property_element.attrib['name']
@@ -28,15 +31,16 @@ def find_references_in_root(document_path: str,
             matches = find_matches(property_element, pattern)
             for match in matches:
                 xpath = property_xpath + '/' + match.location_xpath
-                references.append(
-                    Reference(document_path,
+                reference = Reference(document_path,
                               object_name,
                               property_element_name,
                               match.reference_attribute,
                               match.location,
                               match.matched_text,
                               match.content,
-                              xpath))
+                              xpath)
+                logger.debug(f'Found {repr(reference)}')
+                references.append(reference)
     return references
 
 
@@ -44,6 +48,7 @@ def find_matches(property_element: Element,
                  pattern: Pattern) -> List[Match]:
     property_element_name = property_element.attrib['name']
     if does_property_have_potential_references(property_element_name):
+        logger.debug(f"Checking   Properties/Property[@name='{property_element_name}']")
         xml_property = create_xml_property(property_element)
         return xml_property.find_matches(pattern)
     else:

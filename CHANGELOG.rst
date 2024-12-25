@@ -21,6 +21,7 @@ Added
 ^^^^^
 * Ability to remove ``XLink`` references to a specified document name.
 * Ability to find cross-document references to objects.
+* Add `--debug` flag to CLI for debug logging.
 
 `[0.3.1]`__ - 2021-08-09
 ------------------------

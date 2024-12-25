@@ -1,4 +1,5 @@
 import argparse
+import logging
 import os
 
 from fcxref.remove import remove
@@ -19,6 +20,7 @@ def main():
     parser = argparse.ArgumentParser(
         description='Manage cross-document references to properties.')
     parser.add_argument('--version', action='version', version=__version__)
+    parser.add_argument('--debug', action='store_true', help='Whether to enable debug logging.')
     subparsers = parser.add_subparsers(title='Commands',
                                        dest='command',
                                        required=True)
@@ -62,6 +64,7 @@ def main():
     args = parser.parse_args()
 
     args = vars(parser.parse_args())
+    logging.basicConfig(level=logging.DEBUG if args['debug'] else logging.INFO)
     command = args.pop('command')
     if command == 'find':
         property = Query(args['document'], args['object'], args['property'])
