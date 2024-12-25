@@ -1,5 +1,6 @@
 import argparse
 import os
+from pathlib import Path
 
 from fcxref.remove import remove
 
@@ -69,9 +70,7 @@ def main():
 
         def format_reference(reference: Reference) -> str:
             formatted_reference = str(reference)
-            print(repr(reference))
-            word = 'direct' if str(property) == reference.match else 'indirect'
-            formatted_reference += ' {}'.format(word)
+            formatted_reference += ' {}'.format(get_reference_type(reference, property))
             return formatted_reference
 
         num_references = len(references)
@@ -157,6 +156,24 @@ def query_yes_no(question, default: str = 'yes'):
             return valid[choice]
         else:
             print('Please respond with "yes" or "no" (or "y" or "n").\n')
+
+
+def get_reference_type(reference: Reference, property: Query) -> str:
+    if is_source(reference, property):
+        return 'source'
+    elif str(property) == reference.match:
+        return 'direct'
+    else:
+        return 'indirect'
+
+
+def is_source(reference: Reference, property: Query) -> bool:
+    return (
+        reference.reference_attribute == 'alias' and
+        reference.object_name == property.object_name and
+        Path(reference.document_path).stem == property.document and
+        reference.content == property.property_name
+    )
 
 
 if __name__ == '__main__':
