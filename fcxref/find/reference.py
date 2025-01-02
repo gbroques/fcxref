@@ -1,4 +1,4 @@
-import os
+from .extract_document import extract_document
 
 __all__ = ['Reference']
 
@@ -40,7 +40,7 @@ class Reference:
 
     def _to_string(self):
         return '{} {}.{} {}'.format(
-            format_document_path(self.document_path),
+            extract_document(self.document_path),
             self.object_name,
             self.location,
             self.reference_attribute)
@@ -58,7 +58,3 @@ class Reference:
                 self.xpath == o.xpath
             )
         return False
-
-
-def format_document_path(document_path: str) -> str:
-    return os.path.splitext(os.path.basename(document_path))[0]
