@@ -179,7 +179,7 @@ find
 .. code-block::
 
    $ fcxref find --help ↵                
-   usage: fcxlink find <document> <object> [property]
+   usage: fcxref find <document> <object> [property]
    
    Surround arguments containing special characters in quotes (e.g. "<<My Label>>").
    
@@ -216,7 +216,7 @@ rename
 .. code-block::
 
    $ fcxref rename --help ↵
-   usage: fcxlink rename <document> <object> <from_property> <to_property>
+   usage: fcxref rename <document> <object> <from_property> <to_property>
    
    Surround arguments containing special characters in quotes (e.g. "<<My Label>>").
    
@@ -253,7 +253,7 @@ remove
 .. code-block::
 
    $ fcxref remove --help ↵
-   usage: fcxlink remove <document>
+   usage: fcxref remove <document>
    
    Surround arguments containing special characters in quotes (e.g. "<<My Label>>").
    

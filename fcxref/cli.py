@@ -30,7 +30,7 @@ def main():
     find_parser = subparsers.add_parser('find',
                                         help='Find cross-document references to an object or property',
                                         description='Surround arguments containing special characters in quotes (e.g. "<<My Label>>").',
-                                        usage='fcxlink find <document> <object> [property]')
+                                        usage='fcxref find <document> <object> [property]')
     find_parser.add_argument(
         'document', help='Document name or label.')
     find_parser.add_argument('object', help='Object name or label.')
@@ -41,7 +41,7 @@ def main():
     rename_parser = subparsers.add_parser('rename',
                                           help='Rename cross-document references to a property',
                                           description='Surround arguments containing special characters in quotes (e.g. "<<My Label>>").',
-                                          usage='fcxlink rename <document> <object> <from_property> <to_property>')
+                                          usage='fcxref rename <document> <object> <from_property> <to_property>')
     rename_parser.add_argument(
         'document', help='Document name or label of reference to rename.')
     rename_parser.add_argument(
@@ -56,7 +56,7 @@ def main():
     remove_parser = subparsers.add_parser('remove',
                                           help='Remove XLinks to specified document',
                                           description='Surround arguments containing special characters in quotes (e.g. "<<My Label>>").',
-                                          usage='fcxlink remove <document>')
+                                          usage='fcxref remove <document>')
     remove_parser.add_argument(
         'document', help='Document name of XLinks to remove.')
     # ---------------------------------------------------------
