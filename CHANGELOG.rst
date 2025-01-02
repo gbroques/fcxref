@@ -6,7 +6,7 @@ All notable changes to this project will be documented in this file.
 The format is based on `Keep a Changelog <https://keepachangelog.com/en/1.0.0/>`_,
 and this project adheres to `Semantic Versioning <https://semver.org/spec/v2.0.0.html>`_.
 
-`[Unreleased]`__
+`[0.4.0]`__ - 2025-01-01
 ----------------
 
 Changed
@@ -16,6 +16,7 @@ Changed
   * The 3rd argument, ``property_name``, is now optional.
 
 * Simplify ``find`` CLI output.
+* ``find`` usages within the same spreadsheet (see `#4 <https://github.com/gbroques/fcxref/issues/4>`_).
 
 Added
 ^^^^^
