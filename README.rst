@@ -197,6 +197,12 @@ Simple Queries
 .. code-block::
    
    $ fcxref find MainDocument Spreadsheet Value ↵
+   MainDocument Spreadsheet.A1 content indirect
+   MainDocument Spreadsheet.B1 alias source
+   MainDocument Spreadsheet.B2 content indirect
+   MainDocument Box.Height expression indirect
+   MainDocument Box.Length expression indirect
+   MainDocument Box.Width expression indirect
    ExampleDocument Spreadsheet.B1 content direct
    ExampleDocument Spreadsheet.A1 content indirect
    ExampleDocument Spreadsheet.B1 alias indirect
