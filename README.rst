@@ -1,9 +1,14 @@
 fcxref
 ======
 
-.. image:: https://badge.fury.io/py/fcxref.svg
+|version badge| |downloads badge|
+
+.. |version badge| image:: https://badge.fury.io/py/fcxref.svg
    :alt: PyPI version
    :target: https://badge.fury.io/py/fcxref
+
+.. |downloads badge| image:: https://img.shields.io/pypi/dm/fcxref
+   :alt: PyPI - Downloads
 
 ----
 
