@@ -1,5 +1,7 @@
 from typing import Optional
 
+from .extract_document import extract_document
+
 __all__ = ['Query']
 
 
@@ -29,6 +31,9 @@ class Query:
         if self.property_name:
             regex += '\.' + self.property_name
         return regex
+
+    def matches_document(self, document_path: str) -> bool:
+        return self.document == extract_document(document_path)
 
     def __str__(self):
         return self._to_string()
