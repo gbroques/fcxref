@@ -90,10 +90,16 @@ find
 
 .. code-block::
 
-   ExampleDocument Spreadsheet.B1 content
-   ExampleDocument Spreadsheet.A1 content
-   ExampleDocument Spreadsheet.B1 alias
-   ExampleDocument Box.Length expression
+   MainDocument Spreadsheet.A1 'Value content indirect
+   MainDocument Spreadsheet.B1 Value alias source
+   MainDocument Spreadsheet.B2 =Value content indirect
+   MainDocument Box.Height Cylinder.Value expression indirect
+   MainDocument Box.Length Spreadsheet.Value expression indirect
+   MainDocument Box.Width <<Spreadsheet>>.Value expression indirect
+   ExampleDocument Spreadsheet.B1 =MainDocument#Spreadsheet.Value content direct
+   ExampleDocument Spreadsheet.A1 'Value content indirect
+   ExampleDocument Spreadsheet.B1 Value alias indirect
+   ExampleDocument Box.Length Spreadsheet.Value expression indirect
 
 
 rename
