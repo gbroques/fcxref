@@ -1,9 +1,12 @@
 #!/bin/bash
-# =========================================
+# ================================================================================
 # Convenience script for cutting releases:
 #   * Commit, tag, and push version change
 #   * Deploy to PyPi
-# =========================================
+#
+# Need to set PyPi API token in .pypirc. See:
+# https://packaging.python.org/en/latest/specifications/pypirc/#using-a-pypi-token
+# ================================================================================
 if [[ $# -eq 0 ]] ; then
     echo 'Usage: ./release.bash <version> (e.g. 0.2.0)'
     exit 1
@@ -24,14 +27,9 @@ set +x
 rm -rf dist/
 python setup.py sdist
 
-# https://github.com/plyint/encpass.sh
-. encpass.sh
-
-export TWINE_PASSWORD=$(get_secret pypi password)
-
 # exit when any command fails
 set -e
 
 # print commands before executing
 set -x
-twine upload --username gbroques dist/*
+twine upload --verbose dist/*
