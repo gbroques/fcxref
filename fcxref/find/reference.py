@@ -39,10 +39,11 @@ class Reference:
         )
 
     def _to_string(self):
-        return '{} {}.{} {}'.format(
+        return '{} {}.{} {} {}'.format(
             extract_document(self.document_path),
             self.object_name,
             self.location,
+            self.content,
             self.reference_attribute)
 
     def __eq__(self, o: object) -> bool:

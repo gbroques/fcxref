@@ -9,6 +9,10 @@ and this project adheres to `Semantic Versioning <https://semver.org/spec/v2.0.0
 `[Unreleased]`__
 ----------------
 
+Added
+^^^^^
+* Add content to CLI output.
+
 Changed
 ^^^^^^^
 * Display "source" instead of "indirect" in CLI output for source reference.

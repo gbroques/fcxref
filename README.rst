@@ -197,16 +197,16 @@ Simple Queries
 .. code-block::
    
    $ fcxref find MainDocument Spreadsheet Value ↵
-   MainDocument Spreadsheet.A1 content indirect
-   MainDocument Spreadsheet.B1 alias source
-   MainDocument Spreadsheet.B2 content indirect
-   MainDocument Box.Height expression indirect
-   MainDocument Box.Length expression indirect
-   MainDocument Box.Width expression indirect
-   ExampleDocument Spreadsheet.B1 content direct
-   ExampleDocument Spreadsheet.A1 content indirect
-   ExampleDocument Spreadsheet.B1 alias indirect
-   ExampleDocument Box.Length expression indirect
+   MainDocument Spreadsheet.A1 'Value content indirect
+   MainDocument Spreadsheet.B1 Value alias source
+   MainDocument Spreadsheet.B2 =Value content indirect
+   MainDocument Box.Height Cylinder.Value expression indirect
+   MainDocument Box.Length Spreadsheet.Value expression indirect
+   MainDocument Box.Width <<Spreadsheet>>.Value expression indirect
+   ExampleDocument Spreadsheet.B1 =MainDocument#Spreadsheet.Value content direct
+   ExampleDocument Spreadsheet.A1 'Value content indirect
+   ExampleDocument Spreadsheet.B1 Value alias indirect
+   ExampleDocument Box.Length Spreadsheet.Value expression indirect
 
 💡 **TIP:** When using special characters on the command line such as ``<`` and ``>`` for label names, surround the argument in double-quotes.
 
