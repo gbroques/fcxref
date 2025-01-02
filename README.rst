@@ -287,7 +287,7 @@ and defaults to "No" if an explicit "Yes" is not provided.
 
 Supported FreeCAD Versions
 --------------------------
-Currently only FreeCAD 19 and greater is supported.
+Currently only FreeCAD 1.0 and greater is supported.
 
 If changes are minimal, then supporting older versions may be considered.
 
