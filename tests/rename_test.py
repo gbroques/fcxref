@@ -4,7 +4,7 @@ from typing import Dict
 from xml.etree import ElementTree
 from xml.etree.ElementTree import Element
 
-from fcxref.rename import make_rename
+from fcxref.rename import make_rename_property
 
 
 def find_root_by_document_path(base_path: str, document_pattern: str = '*') -> Dict[str, Element]:
@@ -24,13 +24,13 @@ def load_root(document_xml_path: str) -> Element:
 
 class RenameTest(unittest.TestCase):
 
-    def test_rename(self):
-        rename = make_rename(find_root_by_document_path)
+    def test_rename_property(self):
+        rename_property = make_rename_property(find_root_by_document_path)
 
-        root_by_document_path = rename('base_path',
-                                       'MainDocument',
-                                       'Spreadsheet',
-                                       ('Value', 'RenamedValue'))
+        root_by_document_path = rename_property('base_path',
+                                                'MainDocument',
+                                                'Spreadsheet',
+                                                ('Value', 'RenamedValue'))
 
         self.assertEqual(len(root_by_document_path.items()), 2)
 

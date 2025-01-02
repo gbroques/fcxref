@@ -8,12 +8,12 @@ from fcxref.remove import remove
 from ._version import __version__
 from .find import Query, Reference, make_find
 from .remove import make_remove
-from .rename import make_rename
+from .rename import make_rename_property
 from .root_by_document_path import (find_root_by_document_path,
                                     write_root_by_document_path)
 
 find = make_find(find_root_by_document_path)
-rename = make_rename(find_root_by_document_path)
+rename = make_rename_property(find_root_by_document_path)
 remove = make_remove(find_root_by_document_path)
 
 

@@ -110,7 +110,7 @@ find
 rename
 ^^^^^^
 
-The ``rename`` function takes:
+The ``rename_property`` function takes:
 
 1. the base path to look for FreeCAD documents in
 2. the name or label of the document
@@ -124,10 +124,10 @@ and values are XML `Element`_ objects representing updated ``Document.xml`` file
 
 .. code-block:: python
 
-   from fcxref import rename
+   from fcxref import rename_property
    
    base_path = './example'
-   root_by_document_path = rename(base_path, 'MainDocument', 'Spreadsheet', ('Value', 'RenamedValue'))
+   root_by_document_path = rename_property(base_path, 'MainDocument', 'Spreadsheet', ('Value', 'RenamedValue'))
    print(root_by_document_path)
 
 .. code-block::

@@ -15,6 +15,7 @@ Added
 
 Changed
 ^^^^^^^
+* Renamed ``rename`` function to ``rename_property`` (**breaking change**).
 * Display "source" instead of "indirect" in CLI output for source reference.
 
 `[0.4.0]`__ - 2025-01-01

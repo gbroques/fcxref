@@ -8,10 +8,10 @@ from .rename_owner_document import rename_owner_document
 from .rename_references_in_root import rename_references_in_root
 
 
-def make_rename(find_root_by_document_path: Callable[[str], Dict[str, Element]]):
+def make_rename_property(find_root_by_document_path: Callable[[str], Dict[str, Element]]):
     find = make_find(find_root_by_document_path)
 
-    def rename(base_path: str,
+    def rename_property(base_path: str,
                document: str,
                object_name: str,
                from_to_properties: Tuple[str, str]) -> Dict[str, Element]:
@@ -30,7 +30,7 @@ def make_rename(find_root_by_document_path: Callable[[str], Dict[str, Element]])
         if owner_document_path_by_root:
             root_by_document_path.update(owner_document_path_by_root)
         return root_by_document_path
-    return rename
+    return rename_property
 
 
 def rename_references_in_document_xml(root_by_document_path: Dict[str, Element],
